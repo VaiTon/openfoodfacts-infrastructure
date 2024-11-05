@@ -62,7 +62,7 @@ server {
     # Cache small static assets that are frequently requested
     location ~ ^/(css/|js/|fonts/|images/(attributes|favicon|icons|illustrations|lang|logos|misc|panels|svg)/|.well-known/|api/v./(preferences|attribute_groups)|data/i18n) {
     	proxy_cache mycache;
-    	proxy_cache_key $host$request_uri;
+    	proxy_cache_key changed$host$request_uri;
         proxy_cache_valid any 5m;
         add_header X-Cache-Status $upstream_cache_status;  
 
@@ -85,17 +85,17 @@ server {
     location /api/ {
 
     # 2024/24/09: python script making 50% of total requests using hundreds of IPs
-    if ($http_user_agent = "-"){
-         rewrite ^ /stop-crawling.txt last;
-    }
+    # if ($http_user_agent = "-"){
+    #     rewrite ^ /stop-crawling.txt last;
+    #}
 
-    if ($http_user_agent = "Mozilla/5.0 (compatible)"){
-         rewrite ^ /stop-crawling.txt last;
-    }
+    #if ($http_user_agent = "Mozilla/5.0 (compatible)"){
+    #     rewrite ^ /stop-crawling.txt last;
+    #}
 
-    if ($http_user_agent = "python-requests/2.32.2"){
-         rewrite ^ /stop-crawling.txt last;
-    }
+    #if ($http_user_agent = "python-requests/2.32.2"){
+    #     rewrite ^ /stop-crawling.txt last;
+    #}
 
     	proxy_cache mycache;
     	proxy_cache_key $host$request_uri$cookie_user;
