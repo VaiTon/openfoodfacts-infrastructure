@@ -147,3 +147,21 @@ Restart Datasette and check if you're running the last version: https://mirabell
 
 Restart Datasette and check if you're running the last plugin version: https://mirabelle.openfoodfacts.org/-/plugins
 
+
+## Daily process
+
+Here are the cron jobs launched every day:
+```bash
+# BEWARE: '%' must be escaped when using $()
+
+# Update table of false positive data quality issues (ie. products that can't be fixed for several reasons) 
+# Can be launch at any time
+0 4 * * * bash /home/off/mirabelle/update_not_fixable.sh >> /home/off/mirabelle/update_not_fixable.$(date +'\%Y-\%m').log
+
+# Database daily update. Should be launch after Open Food Facts export is ok
+30 4 * * * bash /home/off/mirabelle/products_daily_update.sh >> /home/off/mirabelle/products_daily_update.$(date +'\%Y-\%m').log
+
+# Launch data quality daily email; must be launched after the database update
+0 8 * * * bash /home/off/mirabelle/distri-qual.sh --normal >> /home/off/mirabelle/distri-qual.$(date +'\%Y-\%m').log 2>&1
+```
+
