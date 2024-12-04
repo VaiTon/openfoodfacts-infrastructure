@@ -9,6 +9,8 @@ description_html: |-
   <a href="https://world.openfoodfacts.org/">Open Food Facts</a>.</p>
 license: ODbL
 license_url: https://opendatacommons.org/licenses/odbl/
+
+# Databases' descriptions and properties
 databases:
   off-stats:
     tables:

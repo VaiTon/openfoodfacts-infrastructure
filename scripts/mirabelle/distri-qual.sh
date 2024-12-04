@@ -239,6 +239,7 @@ echo "averageNbOfNewProductsInErrorPerDay: ${averageNbOfNewProductsInErrorPerDay
 
 averageNetProductsFixedPerDay=$((${averageNbOfProductsFixedPerDay}-${averageNbOfNewProductsInErrorPerDay}))
 echo "averageNetProductsFixedPerDay: ${averageNetProductsFixedPerDay}"
+printf "\n\n"
 
 # Build leader board
 leaderBoard=$(sqlite3 dq-issues.db <<EOF
@@ -294,6 +295,7 @@ for row in "${contributors[@]}"; do
 #  * mark products as sent to xxx on yyy date
 
 readarray products < <( sqlite3 dq-issues.db <<EOF
+ATTACH DATABASE 'dq-issues-non-fixable.db' as non_fixable;
 ATTACH DATABASE 'products.db' AS products;
 SELECT distrib.id, p.code, CAST(p.unique_scans_n as INTEGER) as pop, p.data_quality_errors_tags
  FROM products.[all] as p
@@ -304,7 +306,8 @@ SELECT distrib.id, p.code, CAST(p.unique_scans_n as INTEGER) as pop, p.data_qual
     -- and (p.last_image_t != "") -- or p.last_image_t IS NOT NULL)  -- there is an image
     and (p.image_nutrition_url != "")
     and (p.image_ingredients_url != "")
-    and (p.owner not like "%org-nestle%")  -- nestle is sending wrong data every day
+    and (p.owner not like "org-%")  -- orgs are (as nestle) are sometimes sending wrong data every day
+    and (distrib.code NOT IN (SELECT code FROM non_fixable))
   order by pop DESC
   limit 3
 ;
