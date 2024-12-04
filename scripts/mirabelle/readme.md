@@ -165,3 +165,17 @@ Here are the cron jobs launched every day:
 0 8 * * * bash /home/off/mirabelle/distri-qual.sh --normal >> /home/off/mirabelle/distri-qual.$(date +'\%Y-\%m').log 2>&1
 ```
 
+The `distri-qual.sh` script is building and sending the data quality daily email. here is what it's doing:
+1. update the database related to data quality issues: dq-issues.db
+   - add new products having an issue, that weren't before
+   - update existing products:
+     - update the ones which are not existing anymore in the OFF database
+     - update the ones which have no issue anymore
+5. Read metrics, build leader board and send data quality daily email
+   - exclude non-fixable products
+   - exclude products that have been fixed
+   - exclude products that have been sent since last 50 days
+   - exclude products that don't have an image for the ingredients and the nutrients
+   - exclude products that have a owner (org-%)
+   - exclude products products with low energy, with frequent errors due to rounded values
+   - in 1/5 of the cases exclude products that haven't been scanned last year, and in 4/5 select random products
