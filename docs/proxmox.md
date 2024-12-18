@@ -2,7 +2,21 @@
 
 On ovh1 and ovh2 we use proxmox to manage VMs.
 
-**TODO** this page is really incomplete !
+**TODO** this page is really incomplete!
+
+## Proxmox: knowledge, tips, etc.
+
+* Proxmox wiki is a good source of information: https://pve.proxmox.com/wiki
+* Community scripts to ease Proxmox' utilisation: https://community-scripts.github.io/ProxmoxVE/
+  * those scripts might not be suited for production environnement; it's better suited for homer server
+  * but it can be usefull for:
+    * test things (install a test service very fast)
+    * studying good practices when installing a software
+  * this scripts contains:
+    * things to manage Proxmox: post-install, automate CT updates, etc;
+    * tools to manage Docker and Kubernetes
+    * dozens of web apps and services such as Nextcloud, Keycloack, Nginx proxy manager, Grafana, Prometheus, Yunohost (containing itself dozens of apps), VS Code Server, IA tools, etc.
+
 
 ## Proxmox Backups
 
