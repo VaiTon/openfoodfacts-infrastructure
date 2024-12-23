@@ -41,23 +41,11 @@ proxy_cache_path
 
 # https://images.openfoodfacts.org
 server {
-        listen 443 ssl http2;
-        listen [::]:443 ssl http2;
         server_name images.openfoodfacts.org;
 
         access_log /var/log/nginx/images-access.log combined_upstream buffer=256K flush=1s;
         error_log /var/log/nginx/images-error.log;
 
-        ssl_certificate /etc/letsencrypt/live/images.openfoodfacts.org/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/images.openfoodfacts.org/privkey.pem; # managed by Certbot
-	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
-	ssl_prefer_server_ciphers on;
-	ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
-	ssl_ecdh_curve secp384r1;
-	#ssl_session_cache shared:SSL:10m;
-	ssl_session_tickets off;
-	ssl_stapling on;
-	ssl_stapling_verify on;
 	resolver 9.9.9.9 8.8.8.8 valid=300s;
 	resolver_timeout 5s;
 
@@ -116,5 +104,27 @@ server {
 		# évite un double accès disque pour le cache
 		proxy_temp_path		off;
 	}
+
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/images.openfoodfacts.org-0001/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/images.openfoodfacts.org-0001/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = images.openfoodfacts.org) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+        listen 80 http2;
+        listen [::]:80 http2;
+        server_name images.openfoodfacts.org;
+    return 404; # managed by Certbot
+
 
 }
