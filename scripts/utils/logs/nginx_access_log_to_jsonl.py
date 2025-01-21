@@ -41,9 +41,10 @@ where req_style = 'cgi';
 
 import argparse
 import gzip
-import hashlib
+import hmac
 import json
 import locale
+import random
 import re
 import sys
 from datetime import datetime
@@ -51,14 +52,19 @@ from datetime import datetime
 
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
+# we will use hmac to encode IPs, we will thus have consistent hashing of the same IP
+# for the session
+SECRET = ("".join(chr(i) for i in random.sample(list(range(32,126)) * 64, 64))).encode('ascii')
+
+
 def nginx_time(time_str):
     """Parse a nginx time field and convert to a iso format
 
     eg: 21/Jan/2025:11:00:58 +0000
     """
     return datetime.strptime(time_str, "%d/%b/%Y:%H:%M:%S %z").isoformat()
-    
 
+    
 COMBINED_REGEXP = re.compile(
     r"""
         ^(?P<remote_addr>[^-]*)\ ?-
@@ -87,7 +93,7 @@ COMBINED_TRANSFORM = {
     # time to iso time
     "time_local": lambda d: nginx_time(d['time_local']) if 'time_local' in d else None,
     # hash remote addr
-    "remote_addr": lambda d: hashlib.sha1(d['remote_addr'].encode("utf-8")).hexdigest(),
+    "remote_addr": lambda d: hmac.new(SECRET, d['remote_addr'].encode("utf-8"), 'sha1').hexdigest(),
 }
 
 OFF_REGEXP = re.compile(
