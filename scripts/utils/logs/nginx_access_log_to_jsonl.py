@@ -71,7 +71,7 @@ def nginx_time(time_str):
 COMBINED_REGEXP = re.compile(
     r"""
         ^(?P<remote_addr>[^-]*)\ ?-
-        \ (?P<remote_user>[^[]*)\ ?-?
+        \ (?P<remote_user>[^[]*)\ *
         \ \[(?P<time_local>[^]]*)\]
         \ "(?P<request>[^"]*)"
         \ (?P<status>\d+)
