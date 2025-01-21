@@ -4,11 +4,15 @@
 By default it will blur ip addresses using sha1.
 """
 r"""
+
 Example use:
 ```bash
 # getting logs, and 8 file (days) back
 time python3 /home/alex/nginx_access_log_to_jsonl.py proxy-off-access.log{,.1,.{2..8}.gz} |gzip > /home/alex/nginx_logs.jsonl.gz
-# import in duckdb
+```
+
+Import in duckdb:
+```sql
 /* base import json */
 CREATE TABLE logs AS SELECT * FROM read_json('nginx_logs.jsonl.gz', columns={status: 'INT', body_bytes_sent: 'INT', time_local: 'DATE', remote_addr: 'VARCHAR', remote_user: 'VARCHAR', request: 'VARCHAR', http_referer: 'VARCHAR', http_user_agent: 'VARCHAR'}, ignore_errors=true);
 /* add req info */
@@ -127,7 +131,7 @@ def iter_log(log_path):
         for log_line in sys.stdin:
             yield log_line
     elif log_path.endswith(".gz"):
-        with gzip.open(log_path, 'rb') as log:
+        with gzip.open(log_path, 'rt') as log:
             for log_line in log:
                 yield log_line
     else:
