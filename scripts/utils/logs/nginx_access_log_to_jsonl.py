@@ -127,7 +127,7 @@ def iter_log(log_path):
         for log_line in sys.stdin:
             yield log_line
     elif log_path.endswith(".gz"):
-        with gzip.open('file.txt.gz', 'rb') as log:
+        with gzip.open(log_path, 'rb') as log:
             for log_line in log:
                 yield log_line
     else:
@@ -180,5 +180,7 @@ if __name__ == "__main__":
         print("Unknown format %s" % args.format, file=sys.stderr)
         exit(1)
     for log_path in args.log_path:
+        print("Starting %s" % log_path, file=sys.stderr)
         for data in nginx_data_iter(log_path, **FORMATS[args.format]):
             print(json.dumps(data))
+        print("Processed %s" % log_path, file=sys.stderr)
