@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A script to export nginx acces logs to json.
+"""A script to export nginx acces logs to json.
 
 By default it will blur ip addresses using sha1.
 """
@@ -9,12 +9,15 @@ Example use:
 # getting logs, and 8 file (days) back
 time python3 /home/alex/nginx_access_log_to_jsonl.py proxy-off-access.log{,.1,.{2..8}.gz} |gzip > /home/alex/nginx_logs.jsonl.gz
 # import in duckdb
+/* base import json */
 CREATE TABLE logs AS SELECT * FROM read_json('nginx_logs.jsonl.gz', columns={status: 'INT', body_bytes_sent: 'INT', time_local: 'DATE', remote_addr: 'VARCHAR', remote_user: 'VARCHAR', request: 'VARCHAR', http_referer: 'VARCHAR', http_user_agent: 'VARCHAR'}, ignore_errors=true);
-ALTER TABLE logs add column req STRUCT(verb VARCHAR, uri VARCHAR, params VARCHAR, protocol VARCHAR);
-# note that if we don't put the non capturing on the group needed for params, regexp_extract messes protocol with this other capture…
+/* add req info */
+ALTER TABLE logs add column req STRUCT(verb VARCHAR, uri VARCHAR, params VARCHAR, protocol VARCHAR);
+/* note that if we don't put the non capturing on the group needed for params, regexp_extract messes protocol with this other capture… */
 update logs set req = regexp_extract(request, '^ *(?P<verb>\w+) (?P<uri>[^? ]+)(?:\?(?P<params>[^ ]*))? (?P<protocol>.*)$', ['verb', 'uri', 'params', 'protocol']);
-ALTER TABLE logs add column req_style VARCHAR;
-ALTER TABLE logs add column req_type VARCHAR;
+/* compute req_style and req_type */
+ALTER TABLE logs add column req_style VARCHAR;
+ALTER TABLE logs add column req_type VARCHAR;
 update logs set req_style = case
     when req.uri ~ '/api/.*' then 'api'
     when req.uri ~ '/cgi/.*' then 'cgi'
@@ -23,15 +26,15 @@ update logs set req_style = case
 ;
 update logs set req_type = regexp_extract(req.uri, '/api/v.?/([^/]+)(?:/.*)?' ,1)
 where req_style = 'api';
-
 update logs set req_type = case
     when req.uri ~ '/data.*' then 'data'
     when req.uri ~ '/(mountaj|m\xc9\x99hsul|\xd0\xbf\xd1\x80\xd0\xbe\xd0\xb4\xd1\x83\xd0\xba\xd1\x82|gynnyrch|produkt|product|product|product|produkto|producto|toode|produkto|produit|produto|term\xc3\xa9k|produk|\xe8\xa3\xbd\xe5\x93\x81|afaris|\xd3\xa9\xd0\xbd\xd1\x96\xd0\xbc|\xec\x83\x9d\xec\x84\xb1\xeb\xac\xbc|berhem|\xe0\xa4\x89\xe0\xa4\xa4\xe0\xa5\x8d\xe0\xa4\xaa\xe0\xa4\xbe\xe0\xa4\xa6\xe0\xa4\xa8|produk|produkt|\xe0\xa4\x89\xe0\xa4\xa4\xe0\xa5\x8d\xe0\xa4\xaa\xe0\xa4\xbe\xe0\xa4\xa6\xe0\xa4\xa8|product|product|product|produkt|produkt|produit|produto|produto|produto|\xd0\xbf\xd1\x80\xd0\xbe\xd0\xb4\xd1\x83\xd0\xba\xd1\x82|product|proizvod|produkto|\xc3\xbcr\xc3\xbcn|\xd0\xbf\xd1\x80\xd0\xbe\xd0\xb4\xd1\x83\xd0\xba\xd1\x82|\xe4\xba\xa7\xe5\x93\x81|\xe7\x94\xa2\xe5\x93\x81|\xe7\x94\xa2\xe5\x93\x81).*' then 'product'
     when req.uri ~ '^/countries|nutrition-grades|nova-groups|environmental-score|brands|categories|labels|packaging|origins|manufacturing-places|packager-codes|ingredients|additives|vitamins|minerals|amino-acids|nucleotides|other-nutritional-substances|allergens|traces|misc|languages|contributors|states|data-sources|entry-dates|last-edit-dates|last-check-dates|teams)/?$' then 'facets_count'
+    /* here we don't know if it's text content or a facets search in another language */
     when req.uri ~ '^/[^/]+$' then 'content|facets'
     when req.uri ~ '^/([^/]+/[^/]+)+$' then 'facets_search'
     when req.uri ~ '^/([^/]+/[^/]+)+/[^/]+$' then 'facets_count'
-    else 'facets'
+    else 'unknown'
   end
 where req_style = 'web';
 update logs set req_type = regexp_extract(req.uri, '/cgi/([^.]+)\.pl.*' ,1)
@@ -64,7 +67,7 @@ def nginx_time(time_str):
     """
     return datetime.strptime(time_str, "%d/%b/%Y:%H:%M:%S %z").isoformat()
 
-    
+
 COMBINED_REGEXP = re.compile(
     r"""
         ^(?P<remote_addr>[^-]*)\ ?-
@@ -115,7 +118,7 @@ FORMATS={
         "pattern": OFF_REGEXP,
         "fields": OFF_FIELDS,
         "transform": OFF_TRANSFORM
-    }    
+    }
 }
 
 
@@ -161,7 +164,7 @@ def nginx_data_iter(log_path, pattern=COMBINED_REGEXP, fields=COMBINED_FIELDS, t
                 "Error: Unexpected error in %s at line %s: %s - %s" % (log_path, i, e, log_line),
                 file=sys.stderr
             )
-    
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
