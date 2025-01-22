@@ -29,6 +29,7 @@ map $uri $exporter {
     "/off/nginx/metrics" 10.1.0.113:9113;
     # apache on off container
     "/off/apache/metrics" 10.1.0.113:9117;
+    "/off/apache-priority/metrics" 10.1.0.113:9118;
 }
 
 #log_format debug_exporter "$time_local $scheme://$host:$server_port$request_uri $exporter";
