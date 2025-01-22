@@ -94,6 +94,10 @@ server {
         proxy_set_header Host $host;
         client_max_body_size 512M;
 
+	if ($http_user_agent = "Python/3.9 aiohttp/3.9.1"){
+         rewrite ^ /stop-crawling.txt last;
+    }
+
  	proxy_intercept_errors on;
         error_page 502 /502.html;
     }
@@ -135,6 +139,10 @@ server {
     location ~* 502\.(html|jpg)  {
        root /opt/openfoodfacts-infrastructure/html/;
     }
+	location ~* stop-crawling.txt  {
+       root /opt/openfoodfacts-infrastructure/html/;
+    }
+
 
 }
 

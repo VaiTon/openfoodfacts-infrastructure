@@ -131,8 +131,8 @@ server {
          rewrite ^ /stop-crawling.txt last;
     }
 
-    if ($http_user_agent = "python-requests/2.32.2"){
-         rewrite ^ /stop-crawling.txt last;
+    if ($remote_addr = "disabled-79.160.220.127"){
+         rewrite ^ /contact-us.txt last;
     }
 
         # cache.
@@ -168,6 +168,9 @@ server {
        root /opt/openfoodfacts-infrastructure/html/;
     }
     location ~* stop-crawling.txt  {
+       root /opt/openfoodfacts-infrastructure/html/;
+    }
+    location ~* contact-us.txt  {
        root /opt/openfoodfacts-infrastructure/html/;
     }
 
