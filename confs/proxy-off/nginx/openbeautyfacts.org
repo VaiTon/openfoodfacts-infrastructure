@@ -1,8 +1,10 @@
-# This part allow to create a specific log for rate limiting
-map $status $rate_limited {
-	default 0;
-	444     1;
+# This part allow to create a specific log for errors
+# This will be useful for analysis with fail2ban
+map $status $error_log {
+        default 0;
+        ~^[45]     1;
 }
+
 
 # create zone "obf" for rate limiting 
 limit_req_zone $binary_remote_addr zone=obf:10m rate=240r/m;
@@ -51,12 +53,9 @@ server {
 
     # access logs only on the container
     access_log off;
-    # logs location
-    #access_log  /var/log/nginx/openbeautyfacts.org.log  main buffer=256K flush=1s;
+    # logs errors location
+    access_log  /var/log/nginx/openbeautyacts.org.access-errors.log  main buffer=256K flush=1s if=$error_log;
     error_log   /var/log/nginx/openbeautyfacts.org.errors.log;
-
-    #access_log /dev/shm/rate_limited.log main if=$rate_limited;
-
 
     # Cache small static assets that are frequently requested
     location ~ ^/(css/|js/|fonts/|images/(attributes|favicon|icons|illustrations|lang|logos|misc|panels|svg)/|.well-known/|api/v./(preferences|attribute_groups)|data/i18n) {
