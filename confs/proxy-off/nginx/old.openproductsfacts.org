@@ -17,7 +17,7 @@ server {
     # SSL/TLS settings
     ssl_certificate /etc/letsencrypt/live/old.openproductsfacts.org/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/old.openproductsfacts.org/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/openproductsfacts.org/chain.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/old.openproductsfacts.org/chain.pem;
 
     # Harden SSL
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;

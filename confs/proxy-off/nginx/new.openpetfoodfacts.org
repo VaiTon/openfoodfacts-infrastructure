@@ -27,7 +27,7 @@ server {
     # SSL/TLS settings
     ssl_certificate /etc/letsencrypt/live/new.openpetfoodfacts.org/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/new.openpetfoodfacts.org/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/openpetfoodfacts.org/chain.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/new.openpetfoodfacts.org/chain.pem;
 
     # Harden SSL
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
@@ -53,7 +53,7 @@ server {
     client_max_body_size 20M;
 
     # logs location
-    access_log  /var/log/nginx/new.openpetfoodfacts.org.log  main buffer=256K flush=1s;
+    access_log  /var/log/nginx/new.openpetfoodfacts.org.log  main ; # buffer=256K flush=1s;
     error_log   /var/log/nginx/new.openpetfoodfacts.org.errors.log;
 
     #access_log /dev/shm/rate_limited.log main if=$rate_limited;

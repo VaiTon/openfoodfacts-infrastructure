@@ -17,7 +17,7 @@ server {
     # SSL/TLS settings
     ssl_certificate /etc/letsencrypt/live/old.openpetfoodfacts.org/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/old.openpetfoodfacts.org/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/openpetfoodfacts.org/chain.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/old.openpetfoodfacts.org/chain.pem;
 
     # Harden SSL
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;

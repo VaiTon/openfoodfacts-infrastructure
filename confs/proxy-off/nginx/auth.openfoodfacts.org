@@ -18,6 +18,8 @@ server {
 
     ssl_certificate /etc/letsencrypt/live/auth.openfoodfacts.org/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/auth.openfoodfacts.org/privkey.pem; # managed by Certbot
+    ssl_trusted_certificate /etc/letsencrypt/live/auth.openfoodfacts.org/chain.pem; # managed by Certbot
+
 
 }
 
