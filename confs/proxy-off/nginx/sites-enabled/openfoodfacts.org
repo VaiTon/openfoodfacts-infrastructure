@@ -1,6 +1,6 @@
 # This part allow to create a specific log for errors
 # This will be useful for analysis with fail2ban
-map $status $error_log {
+map $upstream_status $log_access_error {
 	default 0;
 	~^[45]     1;
 }
@@ -51,9 +51,9 @@ server {
     client_max_body_size 20M;
 
     # access logs only on the container
-    access_log off;
-    # logs location
-    access_log  /var/log/nginx/openfoodfacts.org.access-errors.log  main buffer=256K flush=1s if=$error_log;
+    # access_log off;  # no we want to log errors
+    # logs location only when we he an error
+    access_log  /var/log/nginx/openfoodfacts.org.access-errors.log  main buffer=256K flush=1s if=$log_access_error;
     error_log   /var/log/nginx/openfoodfacts.org.errors.log;
 
     # Cache small static assets that are frequently requested
