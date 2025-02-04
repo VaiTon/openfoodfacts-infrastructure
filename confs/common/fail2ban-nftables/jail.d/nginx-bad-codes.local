@@ -4,10 +4,9 @@ enabled = true
 # filter we did, bad codes are auth errors and rate limit hit
 filter = nginx-bad-codes
 # for heavy website, we only log errors access to limit the work of fail2ban
-# start with tail, should be enough
-logpath = /var/log/nginx/*access*.log tail
+logpath = /var/log/nginx/*access*.log 
 port = 80,443
-findtime=1h
+findtime=2h
 maxretry=5
 bantime=1d
 
