@@ -55,6 +55,11 @@ server {
 	if ($http_referer ~* (jobothoniel.com) ) {
 	     return 403;
 	}
+	# really impacting our severs too badly
+	if ($http_user_agent ~* ^(Amazon.?CloudFront)) {
+	     return 429 'Amazon CloudFront is hitting our servers too hard, please contact us and see https://openfoodfacts.github.io/openfoodfacts-server/api/how-to-download-images/';
+	}
+
 
 	location / {
 		# rate limit based on size
