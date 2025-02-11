@@ -7,4 +7,4 @@ filter = proxmox
 backend = systemd
 maxretry = 3
 findtime = 2d
-bantime = 1h
+bantime = 1d
