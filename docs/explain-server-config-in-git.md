@@ -47,7 +47,7 @@ it's perfectly ok to commit a configuration change or script change directly fro
 The best way to commit is:
 1. ensure you put right authorship, setting GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL [^git_author]
 2. commit your changes with a meaningful message (eventually more than one commit)
-3. use `git pull --rebase` to fetch remote updates
+3. use `git pull --rebase --autostash` to fetch remote updates, while keeping your working changes (autostash)
 4. use `git push` to push your changes to the remote
 
 
