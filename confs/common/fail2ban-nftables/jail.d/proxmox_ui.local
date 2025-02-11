@@ -1,4 +1,4 @@
-# /etc/fail2ban/jail.local
+# /etc/fail2ban/jail.d/proxmox_ui.local
 
 [proxmox]
 enabled = true
