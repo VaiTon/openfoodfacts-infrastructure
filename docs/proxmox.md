@@ -142,6 +142,12 @@ IOMMU ?
 
 Don't forget to schedule [backups](#proxmox-backups).
 
+### Install fail2ban
+
+There is a common fail2ban configuration [shared between all the Proxmox servers](./how-to-fail2ban-ban-bots.md).
+
+`sshd` and `proxmox_ui` jails should be installed and running.
+
 ## HTTP Reverse Proxy
 
 The VM 101 is a http / https proxy to all services.
