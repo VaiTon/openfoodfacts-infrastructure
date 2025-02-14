@@ -6,8 +6,8 @@ filter = nginx-bad-codes
 # for heavy website, we only log errors access to limit the work of fail2ban
 logpath = /var/log/nginx/*access*.log 
 port = 80,443
-findtime=2h
-maxretry=5
+findtime=1h
+maxretry=12
 bantime=1d
 ignoreip= 10.1.0.0/16 ; internal
     146.59.148.140 ; ovh1
