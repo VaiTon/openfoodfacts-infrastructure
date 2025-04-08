@@ -34,6 +34,6 @@ Also look at all install and post-mortem reports in [docs/reports](./docs/report
 * The meeting will handle Agenda items first, and if time permits, collaborative bug triage.
 </details>
 
-## Virtual Machines
+## Virtual machines
 
 See [docs/virtual-machines.md](./docs/virtual-machines.md)
