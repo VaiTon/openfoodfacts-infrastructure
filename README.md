@@ -5,22 +5,6 @@ Sysadmin repository for the various parts of the Open Food Facts infrastructure.
 * We have a status page at https://status.openfoodfacts.org/, driven by https://github.com/openfoodfacts/openfoodfacts-upptime
 * We also have a [specific repository regarding monitoring](https://github.com/openfoodfacts/openfoodfacts-monitoring)
 
-## Current priorities
-
-As of 2023 our current priorities are:
-
-* server migration with hardware upgrade and a clean containerized install - and zfs syncs
-* better encrypted two-way communication between data centers  (stunnel + https)
-* backups checks
-  * testing backups through staging
-    * with automated deployment of new clones
-  * monitoring backups
-* better monitoring
-  * more/better dashboards
-  * more active checks (monitoring - alerts)
-  * less false positives in alerts
-* GPU server for inference and possibly one for training (not hosted) - may
-
 ## Incident logs
 
 We started logging incidents by server:
@@ -34,46 +18,16 @@ We started logging incidents by server:
 
 ## Documentation
 
-Link to [Github Page](https://openfoodfacts.github.io/openfoodfacts-infrastructure/)
-
-The infrastructure documentation is as follows:
-
-- [Overview](./docs/overview.md)
-
-- [Mail](./docs/mail.md) - servers mail setup
-- [Free Datacenter](./docs/free-datacenter.md) - Data center with main production servers
-- [Linux Server](./docs/linux-server.md) - servers general setup
-- [Mail](./docs/mail.md) - servers mail setup
-- [An introduction to ZFS](./docs/zfs-overview.md) - ZFS is much used in our infrastructure
-- [Proxmox](./docs/proxmox.md) - about proxmox management
-- [CICD](./docs/cicd.md) - continuous integration and deployment
-- [Observability](./docs/observability.md) - doc on monitoring / logs / etc.
-- [Docker Onboarding](./docs/docker_onboarding.md)
-- [Docker Infrastructure](./docs/docker_architecture.md)
-- [Virtual Machines](#virtual-machines)
-
-The main services:
-- [MongoDB](./docs/mongodb.md) the MongoDB database
-- [Redis](./docs/redis.md) we also use Redis
-- [Open Food Facts Query](./docs/openfoodfacts-query.md) service computing aggregations
-
-Some services:
-
-- [Discourse](./docs/discourse.md) for forum
-- [NGINX reverse proxy](./docs/nginx-reverse-proxy.md) the reverse proxy for OVH services
-- [Folksonomy](./docs/folksonomy.md) user editable labels and values
-- [Matomo](./docs/matomo.md) for web analytics
-- [Producers sftp](./docs/producers_sftp.md) to push product updates on producer platform
-- [Zammad](./docs/zammad.md) for support
-- [Odoo](./docs/odoo.md) the CRM
+See our [Introduction](./docs/index.md),
+also on [Github Page](https://openfoodfacts.github.io/openfoodfacts-infrastructure/)
 
 Also look at all install and post-mortem reports in [docs/reports](./docs/reports/)
 
 <details><summary><h2>Monthly meetings</h2></summary>
 
-* We e-meet monthly at [18:00 CET](https://dateful.com/convert/paris-france?t=6pm) the second Thuesday of the month
-* ![Google Meet](https://img.shields.io/badge/Google%20Meet-00897B?logo=google-meet&logoColor=white) Video call link: meet.google.com/ybq-dwuk-pvi
-* Join by phone: https://tel.meet/nnw-qswu-hza?pin=2111028061202
+* We e-meet Monthly on the second Thursday at [18:00 CET](https://dateful.com/convert/paris-france?t=6pm) the second Thuesday of the month
+* ![Google Meet](https://img.shields.io/badge/Google%20Meet-00897B?logo=google-meet&logoColor=white) Video call link: [meet.google.com/ybq-dwuk-pvi](https://meet.google.com/ybq-dwuk-pvi)
+* Join by phone: [https://tel.meet/nnw-qswu-hza?pin=2111028061202](https://tel.meet/ybq-dwuk-pvi?pin=2951810687087)
 * Add the Event to your Calendar by [adding the Open Food Facts community calendar to your calendar](https://wiki.openfoodfacts.org/Events)
 * [Monthly Agenda](https://docs.google.com/document/d/18BNNqxL6MSLAMrwsQ9F-CaVBUojnUEilQmQuC7XdVks/edit?usp=sharing): please add the Agenda items as early as you can. 
 * Make sure to check the Agenda items in advance of the meeting, so that we have the most informed discussions possible. 
@@ -112,4 +66,4 @@ Also look at all install and post-mortem reports in [docs/reports](./docs/report
 |<a href=https://github.com/openfoodfacts/openfoodfacts-infrastructure/issues/20> robotoff-org [#20]</a>                                          |closed|Debian 10                     |4                |8 Gb                                                           |32 Gb                                                                                                              |100 Gb               |robotoff, elastic search, tensorflow, postgresql                                       |
 <!-- VM table -->
 
-<a href="https://github.com/openfoodfacts/openfoodfacts-infrastructure/issues/new?assignees=cquest&labels=container&template=vm-template.md&title="><img src="./scripts/add.png" style="background: transparent; vertical-align: middle" width="30"/>&nbsp;&nbsp;Request a VM</img></a>
+See [docs/virtual-machines.md](./docs/virtual-machines.md)
