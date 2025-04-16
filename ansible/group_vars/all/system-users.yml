@@ -22,3 +22,6 @@ system_users_github_authorized_users:
   - name: cquest
     is_superuser: true
     state: present
+  - name: thomassauvage
+    is_superuser: true
+    state: present
