@@ -30,7 +30,7 @@ markdown_extensions:
 
 plugins:
   # thanks to this plugin, the .pages files will customize navigation entries
-  - awesome-pages
+  - awesome-nav
   - search
   # glightbox is for images
   - glightbox:
