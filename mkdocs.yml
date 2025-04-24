@@ -29,6 +29,9 @@ markdown_extensions:
   - mdx_breakless_lists
 
 plugins:
+  # thanks to this plugin, the .pages files will customize navigation entries
+  - awesome-pages
+  - search
   # glightbox is for images
   - glightbox:
       auto_caption: true
