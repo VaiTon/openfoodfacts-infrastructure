@@ -1,0 +1,31 @@
+# do we need syncoid enabled?
+sanoid__syncoid_enabled: true
+
+# do we have a configuration to link in the infrastructure confs/ directory?
+# we will also link for syncoid if it is enabled
+sanoid__link_configuration: true
+
+# where is the configurations git root path (eg /opt/openfoodfacts-infrastructure/)
+sanoid__configurations_git_root_path: ""
+
+# where are the configuration files in the git repository
+# this is the folder where there is one folder per server
+sanoid__configurations_src_path: ""
+
+
+# we might need to create some zfs datasets that hold backups
+sanoid__datasets_to_create: []
+
+# operators to create on distant machines
+sanoid__create_operators: []
+# - username: xxxoperator  # username on the distant server
+#   server: <name in inventory> # server name in inventory
+#   server_fqdn: <fqdn of the server>  # server fqdn, used to connect to it
+#   needs_sync_snap: true  # (default false) if true extend zfs permissions
+#                          # to allow creating / destroying snapshots
+#   pubkey_path: /root/.ssh/id_rsa.pub # path to the public key to add for operator
+#                                      # defaults to root id_rsa.pub
+
+sanoid__create_operators_needs_sync_snap_default: false
+
+sanoid__create_operators_pubkey_path_default: /root/.ssh/id_rsa.pub

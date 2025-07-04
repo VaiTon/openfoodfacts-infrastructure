@@ -1,3 +1,4 @@
+proxmox_node__pve_cluster_addr0: 10.12.0.1
 
 proxmox_node_zfs_pools:
   - name: hdd-zfs
@@ -7,10 +8,10 @@ proxmox_node_zfs_pools:
     filesystem_properties: "{{ proxmox_node_zfs_pools_filesystem_properties_defaults }}"
 
 proxmox_node_zfs_filesystems:
-- name: hdd-zfs/pve
-- name: hdd-zfs/backups
+  - name: hdd-zfs/pve
+  - name: hdd-zfs/backups
 
-pve_storages:
+proxmox_node__pve_storages:
   - name: hdd-zfs-pve
     type: zfspool
     pool: hdd-zfs/pve
