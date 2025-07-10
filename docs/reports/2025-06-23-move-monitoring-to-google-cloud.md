@@ -9,6 +9,10 @@ We have some free credits there (thank you Google).
 
 So we decided to move monitoring to Google Cloud.
 
+## Creating the server in google cloud
+
+We provisioned a VM in Google Cloud in "robotoff" project, with 160GB of disk space.
+
 ## Setting up server and preparing the switch
 
 Thomas had prepared the new server using ansible,
@@ -22,6 +26,18 @@ and for that we add special rules to the container-deploy).
 
 At the end we had a working monitoring server,
 but without historical data and without the DNS pointing to it.
+
+### Adding a disk
+
+Elasticsearch backups are quite big, so we added a 300G disk to the VM.
+
+To do that, goes on the VM in Google Cloud, click on "modify", and then add another disk.
+
+As it's just for backups, we just added a one zone standard persistent disk.
+
+This disk is immediately available as `/etc/sdb`.
+
+We will make it a zpool volume so that it's easier to sync on other servers.
 
 ### A bit before the switch
 
