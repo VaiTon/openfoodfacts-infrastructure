@@ -21,6 +21,10 @@ off2:
 - changed-files:
   - any-glob-to-any-file: '**/*off2*'
 
+osm45:
+- changed-files:
+  - any-glob-to-any-file: '**/*osm45*'
+
 off1:
 - changed-files:
   - any-glob-to-any-file: '**/*off1*'
