@@ -49,6 +49,10 @@ hetzner-01:
 - changed-files:
   - any-glob-to-any-file: '**/*hetzner-01*'
 
+hetzner-02:
+- changed-files:
+  - any-glob-to-any-file: '**/*hetzner-02*'
+
 monitoring-01:
 - changed-files:
   - any-glob-to-any-file: '**/*monitoring-01*'
@@ -118,3 +122,4 @@ Odoo:
 "🔭 observability":
 - changed-files:
   - any-glob-to-any-file: 'docs/observability.md'
+  
