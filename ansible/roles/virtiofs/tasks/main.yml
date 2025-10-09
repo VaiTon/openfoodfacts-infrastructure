@@ -1,0 +1,18 @@
+---
+- name: Install Virtiofs daemon
+  ansible.builtin.apt:
+    pkg:
+      - virtiofsd
+    state: present
+    update_cache: true
+
+- name: Get ZFS Datasets info
+  ansible.builtin.import_tasks: get_zfs_datasets.yml
+
+- name: Setup virtiofs directories
+  ansible.builtin.include_tasks:
+    file: virtiofs_mapping.yml
+  loop: "{{ virtiofs__dir_mappings }}"
+  loop_control:
+    label: "dir - {{ _mapping.id }}"
+    loop_var: _mapping
