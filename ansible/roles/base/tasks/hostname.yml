@@ -66,4 +66,4 @@
 
 - name: "Set ansible_fqdn fact"
   ansible.builtin.set_fact:
-    ansible_fqdn: "{{ inventory_hostname }}.{{ host_domain }}"  # noqa: var-naming
+    ansible_fqdn: "{{ inventory_hostname }}.{{ host_domain }}" # noqa: var-naming

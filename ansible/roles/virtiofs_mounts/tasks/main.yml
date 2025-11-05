@@ -1,0 +1,27 @@
+---
+- name: Compute if we need to add virtiofs driver and stuff
+  ansible.builtin.set_fact:
+    # at least on item present
+    _virtiofs_mounts__driver_needed: |
+      (virtiofs_mounts__mounts | rejectattr('state', 'absent'))
+
+- name: Ensure qemu-guest-agent is installed
+  ansible.builtin.apt:
+    pkg: qemu-guest-agent
+    state: present
+  when: _virtiofs_mounts__driver_needed
+
+- name: Ensure virtiofs driver is installed
+  community.general.modprobe:
+    name: virtiofs
+    state: present
+    persistent: present
+  when: _virtiofs_mounts__driver_needed
+
+- name: Ensure the desired virtiofs are mounted (or not)
+  ansible.posix.mount:
+    fstype: virtiofs
+    src: "{{ item.src | mandatory }}"
+    path: "{{ item.path | mandatory }}"
+    state: "{{ item.state | default('mounted') }}"
+  loop: "{{ virtiofs_mounts__mounts }}"

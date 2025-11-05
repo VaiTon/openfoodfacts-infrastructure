@@ -1,4 +1,27 @@
 ---
+- name: Ensure docker volumes exists, in case we want to mount from virtiofs
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: "{{ item.mode }}"
+    owner: root
+    group: root
+  when: "docker__volumes_virtiofs is defined"
+  loop:
+    - path: "/var/lib/docker"
+      mode: "0710"
+    - path: "/var/lib/docker/volumes"
+      mode: "0701"
+
+- name: Eventually mount docker volumes from virtiofs
+  ansible.builtin.import_role:
+    name: virtiofs_mounts
+  vars:
+    virtiofs_mounts__mounts:
+      - src: "{{ docker__volumes_virtiofs }}"
+        path: "/var/lib/docker/volumes"
+        state: "{{ 'mounted' if (docker__volumes_virtiofs is defined) else 'absent' }}"
+
 - name: Install docker
   ansible.builtin.import_role:
     name: geerlingguy.docker

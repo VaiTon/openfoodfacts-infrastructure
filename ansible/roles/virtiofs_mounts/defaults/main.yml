@@ -1,0 +1,7 @@
+---
+# the virtiofs to mount
+# a list where each entry is a dict with:
+# - src giving the virtiofs mapping name
+# - path is the mount path
+# - state: absent or present
+virtiofs_mounts__mounts: []

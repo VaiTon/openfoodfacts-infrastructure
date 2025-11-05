@@ -1,3 +1,4 @@
+---
 # directory mappings
 virtiofs__dir_mappings: []
 # a list of dict with proxmox_resource_mapping args, but type (which is always 'dir')

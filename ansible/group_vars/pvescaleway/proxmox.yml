@@ -13,7 +13,6 @@ proxmox_node__pve_cluster_addr1: "{{ ansible_hostname }}"
 
 # directory mappings
 virtiofs__dir_mappings: []
-
 # FIXME
 # pve_ssl_private_key
 # pve_ssl_certificate

@@ -16,6 +16,11 @@ virtiofs__dir_mappings:
       - node: hetzner-02
         path: /rpool/qm-200-virtiofs
     description: "virtiofs dataset for qm-200"
+  - id: qm-201-virtiofs-docker-volumes
+    map:
+      - node: hetzner-02
+        path: /rpool/virtiofs/qm-201/docker-volumes
+    description: "virtiofs dataset for qm-201 docker volumes"
 
 # FIXME
 # pve_ssl_private_key

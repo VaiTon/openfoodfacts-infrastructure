@@ -1,0 +1,5 @@
+---
+# if you are in a QEMU volume,
+# you may set this to mount the docker volumes in a virtio device
+# It must be the name of the virtiofs mapping
+docker__volumes_virtiofs:

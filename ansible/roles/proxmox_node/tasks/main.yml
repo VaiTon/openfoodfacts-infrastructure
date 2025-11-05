@@ -14,7 +14,7 @@
   tags: host_file
 
 - name: Prepare zpool and datasets
-  ansible.builtin.include_role:
+  ansible.builtin.import_role:
     name: aisbergg.zfs
   vars:
     zfs_manage_repository: true
@@ -40,7 +40,7 @@
     msg: "proxmox_node__pve_cluster_addr0 must be defined if proxmox_node__pve_cluster_enabled is true"
 
 - name: Run proxmox node install
-  ansible.builtin.include_role:
+  ansible.builtin.import_role:
     name: lae.proxmox
   vars:
     # we are handling zfs stuff with aisbergg.zfs, above

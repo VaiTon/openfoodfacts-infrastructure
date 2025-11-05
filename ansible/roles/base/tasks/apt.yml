@@ -7,6 +7,13 @@
     group: root
     mode: "0644"
 
+# Needed to enable backport repository
+- name: Install gnupg2
+  ansible.builtin.apt:
+    pkg: gnupg2
+    state: present
+    update_cache: true
+
 - name: "Enable backport repository"
   ansible.builtin.apt_repository:
     repo: "deb http://deb.debian.org/debian {{ ansible_distribution_release }}-backports main contrib non-free"

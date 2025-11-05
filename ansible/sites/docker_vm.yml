@@ -1,0 +1,9 @@
+---
+# A playbook to install a VM that is used to host docker containers based deployments
+- name: Docker VM
+  hosts: docker_vm_hosts
+  gather_facts: true
+  become: true
+  roles:
+    - role: docker
+      tags: ["base", "docker"]

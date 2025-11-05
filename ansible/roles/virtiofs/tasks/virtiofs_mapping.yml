@@ -1,8 +1,16 @@
+---
+- name: Reset the mapping options
+  # otherwise it would cumulate with previous runs
+  ansible.builtin.set_fact:
+    _virtiofs__resource_mapping: "{{ [] }}"
+
 - name: Compute the mapping options
   ansible.builtin.set_fact:
     _virtiofs__resource_mapping: |
-      {{ (_virtiofs__resource_mapping|default([])) +
-      [ "node=" + item.node + ",path=" + item.path ] }}
+      {{
+        _virtiofs__resource_mapping +
+        [ "node=" + item.node + ",path=" + item.path ]
+      }}
   loop: "{{ _mapping.map }}"
 
 - name: Set directory mapping in Proxmox

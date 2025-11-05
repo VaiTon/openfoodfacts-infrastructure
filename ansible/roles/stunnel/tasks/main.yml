@@ -65,7 +65,6 @@
   vars:
     git_based_configs__service_name: stunnel@off.service
 
-
 # Check that port 5506 and 5507 are allowed in iptables
 # If the task is marked as changed, make sure that a `iptables_public_ports`
 # variable is defined for the host including ports 5506 and 5507 and re-run the
