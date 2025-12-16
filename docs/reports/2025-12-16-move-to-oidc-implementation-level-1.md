@@ -25,3 +25,21 @@ Found that auth.openfoodfacts.org was down when starting so manually restarted
 When working on OFF the oidc settings were not present at all so had to add.
 
 Had to revert as auth.openfoodfacts.org went down again. Need to investigate why...
+
+## Resumed on 2025-12-16
+
+Server has now moved to Scaleway so Config2.pm needs to read:
+
+```
+$oidc_implementation_level = 1;
+$oidc_discovery_url = 'https://auth.openfoodfacts.org/realms/openfoodfacts/.well-known/openid-configuration';
+```
+
+Progress:
+
+* OBF: Done
+* OPFF: Done
+* OPF: Done
+* OFF-PRO: Done
+* OFF: Done
+
