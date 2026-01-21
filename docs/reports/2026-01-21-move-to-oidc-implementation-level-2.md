@@ -12,8 +12,8 @@ Check that teh minion and redis_listener services were still running:
 
 ```
 export SERVICE=$HOSTNAME
-sudo systemctl -l status -no-pager minion@$SERVICE.service 
-sudo systemctl -l status -no-pager redis_listener@$SERVICE.service 
+sudo systemctl -l status --no-pager minion@$SERVICE.service 
+sudo systemctl -l status --no-pager redis_listener@$SERVICE.service 
 ```
 
 Edit Config2.pm using `sudo -u off vi /srv/$SERVICE/lib/ProductOpener/Config2.pm` and set `$oidc_implementation_level = 2;`
@@ -38,11 +38,43 @@ To test:
 # Progress
 
 * OBF: Done
-* OPFF: 
-* OPF: 
+* OPFF: Done
+* OPF: Done
 * OFF-PRO: 
 * OFF: 
 
 # Status 2026-01-21 12:26 UTC
 
 OBF worked OK but OPFF wouldn't allow login at Level 2. Investigating...
+
+Root URL was worng (was set to https://world.new.openpetfoodfacts.org). Fixed this to https://world.openpetfoodfacts.org but still not working...
+
+It looks like opff is only at version v2.84.0 where obf is at v2.85.1
+
+Attempted to upgrade but got this error on checkout:
+
+```
+error: The following untracked working tree files would be overwritten by checkout:
+        conf/opf-minion_log.conf
+        conf/opff-minion_log.conf
+```
+Removed the local copies as they were a temporary fix and completed upgrade but still not working.
+
+Eventually found an error in the Keycloak client events:
+```
+January 21, 2026 at 3:59 PM	No user details	
+LOGIN_ERROR	213.36.253.208
+reason
+Client requires user consent
+auth_method
+oauth_credentials
+grant_type
+password
+client_auth_method
+client-secret
+error
+consent_denied
+```
+
+Fixed the OPFF client in Keycloak.
+
