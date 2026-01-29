@@ -1,11 +1,9 @@
-version: "3.9"
-
 # Adapted from https://github.com/heartexlabs/label-studio/blob/ea7c526e9983399eddebe3c8fee9abf3e3bc062c/docker-compose.yml
 
 services:
   app:
     restart: $RESTART_POLICY
-    image: heartexlabs/label-studio:1.11.0
+    image: heartexlabs/label-studio:1.22.0
     ports:
       - "${LABEL_STUDIO_EXPOSE:-127.0.0.1:8080}:8080"
     depends_on:
@@ -25,7 +23,7 @@ services:
     command: label-studio
 
   db:
-    image: postgres:11.5
+    image: postgres:17.7
     hostname: db
     restart: $RESTART_POLICY
     environment:
