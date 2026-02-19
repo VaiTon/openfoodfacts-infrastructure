@@ -42,4 +42,6 @@ off_private_networks_v4:
   - "192.168.0.0/16"
 
 # FIXME
-off_private_networks_v6: []
+off_private_networks_v6:
+  # local network (very wide definition: everything starting with `fded:`)
+  - "fded::/16"
