@@ -1,12 +1,31 @@
 # This part allow to create a specific log for errors
 # This will be useful for analysis with fail2ban
+
+geo $whitelist {
+  default 0;
+  # CIDR in the list below are not limited
+  # images.openfoodfacts.org
+  217.182.132.133/24 1;
+  # internal trafic
+  10.1.0.0/16 1;
+  # moji
+  2a06:c484:5::200 1;
+  91.175.166.38 1;
+}
+
+map $whitelist $limit {
+   0     $binary_remote_addr;
+   1     "";
+}
+
 map $upstream_status $log_access_error {
 	default 0;
 	~^[45]     1;
 }
 
 # create zone "off" for rate limiting 
-limit_req_zone $binary_remote_addr zone=off:10m rate=240r/m;
+limit_req_zone $limit zone=off:10m rate=15r/m;
+limit_req_zone $limit zone=off-api:10m rate=15r/m;
 
 
 server {
@@ -94,6 +113,18 @@ server {
     #     rewrite ^ /stop-crawling.txt last;
     #}
 
+        # Rate limiting
+        #limit_req_log_level error;
+        limit_req zone=off-api burst=10 nodelay; # burst=120 means you can do 240+120 requests
+                                              # before experimenting a 444 error
+        #limit_req_log_level warn;   # not sure if necessary
+        limit_req_status 444; # allows a specific http status code to clearly
+                              # identify rate limiting
+        #limit_req_dry_run on; # Enables the dry run mode. In this mode, requests
+                              # processing rate is not limited, however, in the
+                              # shared memory zone, the number of excessive requests
+                              # is accounted as usual.
+
     	proxy_cache mycache;
     	proxy_cache_key $host$request_uri$cookie_user;
         proxy_cache_valid any 5s;
@@ -150,12 +181,12 @@ server {
         error_page 502 /502.html;
 
         # Rate limiting
-        limit_req zone=off burst=120 nodelay; # burst=120 means you can do 240+120 requests
+        limit_req zone=off burst=10 nodelay; # burst=120 means you can do 240+120 requests
                                               # before experimenting a 444 error
         #limit_req_log_level warn;   # not sure if necessary
         limit_req_status 444; # allows a specific http status code to clearly
                               # identify rate limiting
-        limit_req_dry_run on; # Enables the dry run mode. In this mode, requests
+        #limit_req_dry_run on; # Enables the dry run mode. In this mode, requests
                               # processing rate is not limited, however, in the 
                               # shared memory zone, the number of excessive requests 
                               # is accounted as usual.
