@@ -9,7 +9,7 @@
 # - whitelisted IPs
 
 # Exclude specific IP addresses from rate-limit (for both "/" and facets rate-limiters)
-geo $whitelist {
+geo $whitelist_by_ip {
   default 0;
   # CIDR in the list below are not limited
   # images.openfoodfacts.org
@@ -21,11 +21,20 @@ geo $whitelist {
   91.175.166.38 1;
 }
 
-# Allow known crawlers to access facet pages without being globally
-# rate-limited
-map $http_user_agent $allowed_user_agent {
+map $http_user_agent $whitelist_by_ua {
     default 0;
-    ~*Googlebot|Bingbot|CCBot|archive\.org_bot 1;
+    ~*Smoothie 1;  # Whitelist our own app based on its User-Agent
+    ~*Googlebot|Bingbot|CCBot|archive\.org_bot 1;  # Whitelist known crawlers based on their User-Agent
+    # Major contributors
+    ~*CalorieCounterApp 1;
+}
+
+# List of User-Agent we forbid access to
+map $http_user_agent $deny_user_agents {
+    default 0;
+    ~*Seekport|Ahrefs|DataForSeo|Seznam|ZoomBot|Mojeek|QRbot|Bytespider|SEOkicks|Searchmetrics|MJ12|SurveyBot|SEOdiver|wotbox|Cliqz|Paracrawl|Scrapy|VelenPublicWebCrawler|Semrush|MegaIndex\.ru|YandexMarket|Amazon|GPTBot|ChatGPT-User|PerplexityBot|ClaudeBot|Claude-Web|cohere-ai|anthropic-ai|ImagesiftBot|Diffbot|Timpibot|meta-webindexer|meta-externalagent|Applebot 1;
+    ~*MyOFFScraper|Vitalyze-Backfill|AvoApp|fernwise-enrich-worker|ShoopsAI|ProductResearch|KakyApp|ConnectedSI-ImageLibrary 1;
+    ~*python-requests 1;
 }
 
 # Allow logged-in users to access facets without being globally
@@ -37,8 +46,8 @@ map $cookie_session $auth {
     '' 0;  # Cookie is not present (empty value), set `$auth=0`
 }
 
-map "$whitelist$auth$allowed_user_agent" $limit_facets {
-   # $whitelist$no_auth$allowed_user_agent values:
+map "$whitelist_by_ip$auth$whitelist_by_ua" $rl_facets_key {
+   # $whitelist_by_ip$auth$whitelist_by_ua values:
    # - "000" = not whitelisted + not logged in + not allowed user agents -> DO rate limit (facets)
    # - "1X" = whitelisted IP -> don't rate limit
    # - "01X" = not whitelisted + logged in -> don't rate limit
@@ -47,7 +56,7 @@ map "$whitelist$auth$allowed_user_agent" $limit_facets {
    default    "";
 }
 
-map $whitelist $limit {
+map $whitelist_by_ip $rl_per_ip_key {
    0     $binary_remote_addr;
    # In limit_req_zone, requests with an empty key are not accounted. See:
    # https://nginx.org/en/docs/http/ngx_http_limit_req_module.html#limit_req_zone
@@ -56,10 +65,43 @@ map $whitelist $limit {
    1     "";
 }
 
+# Add a whitelist of allowed clients that have a specific IP address or User-Agent
+map "$whitelist_by_ip$whitelist_by_ua" $whitelist_by_ip_and_ua {
+   11    1;
+   01    1;
+   10    1;
+   default    0;
+}
+
+map $request_method $request_method_get {
+    default 0;
+    GET 1;
+}
+
+# Add a key for a global rate-limiter (all IP addresses) for requests:
+# - from clients that are not whitelisted (by IP address or User-Agent)
+# - only for clients without a session cookie
+# - for GET requests only: allow write queries (POST, PATCH, PUT) and HEAD
+map "$whitelist_by_ip_and_ua$auth$request_method_get" $rl_global_key {
+   001   "global";
+   default    "";
+}
+
+
+# Add a key for a global rate-limiter (all IP addresses) for API requests:
+# - from clients that are not whitelisted (by IP address or User-Agent)
+# - for GET requests only: allow write queries (POST, PATCH, PUT) and HEAD
+map "$whitelist_by_ip_and_ua$request_method_get" $rl_api_global_key {
+   01   "global";
+   default    "";
+}
+
 # create zone "off" for rate limiting 
-limit_req_zone $limit zone=off:10m rate=15r/m;
-limit_req_zone $limit zone=off-api:10m rate=15r/m;
-limit_req_zone $limit_facets zone=off-facets:10m rate=1r/m;
+limit_req_zone $rl_per_ip_key zone=off:10m rate=15r/m;
+limit_req_zone $rl_per_ip_key zone=off-api:10m rate=15r/m;
+limit_req_zone $rl_facets_key zone=off-facets:10m rate=1r/m;
+limit_req_zone $rl_global_key zone=off-global:10m rate=20000r/m;
+limit_req_zone $rl_api_global_key zone=off-api-global:10m rate=20000r/m;
 
 
 # This part allow to create a specific log for errors
@@ -116,6 +158,10 @@ server {
     access_log  /var/log/nginx/openfoodfacts.org.access-errors.log  main buffer=256K flush=1s if=$log_access_error;
     error_log   /var/log/nginx/openfoodfacts.org.errors.log;
 
+    if ($deny_user_agents = 1) {
+        return 403;
+    }
+
     # Cache small static assets that are frequently requested
     location ~ ^/(css/|js/|fonts/|images/(attributes|favicon|icons|illustrations|lang|logos|misc|panels|svg)/|.well-known/|api/v./(preferences|attribute_groups)|data/i18n) {
     	proxy_cache mycache;
@@ -156,6 +202,7 @@ server {
 
         # Rate limiting
         #limit_req_log_level error;
+        limit_req zone=off-api-global nodelay;
         limit_req zone=off-api burst=10 nodelay; # burst=10 means you can do 15+10 requests
                                               # before experimenting a 429 error
         #limit_req_log_level warn;   # not sure if necessary
@@ -186,6 +233,7 @@ server {
     location /facets {
         limit_req zone=off-facets nodelay;
         limit_req zone=off burst=10 nodelay;
+        limit_req zone=off-global nodelay;
         limit_req_status 429;
 
         proxy_pass http://10.1.0.113:80;
@@ -214,6 +262,7 @@ server {
         # Rate limiting
         limit_req zone=off burst=10 nodelay; # burst=10 means you can do 15+10 requests
                                               # before experimenting a 429 error
+        limit_req zone=off-global nodelay;
         #limit_req_log_level warn;   # not sure if necessary
         limit_req_status 429; # allows a specific http status code to clearly
                               # identify rate limiting
@@ -241,6 +290,5 @@ server {
     location ~* contact-us.txt  {
        root /opt/openfoodfacts-infrastructure/html/;
     }
-
 }
 
