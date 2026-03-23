@@ -1,6 +1,14 @@
-# This part allow to create a specific log for errors
-# This will be useful for analysis with fail2ban
+# -- Rate-limiting --
+# Below, we configure map directive that will help us to enforce the rate limits.
+# We have 2 different rate limits enforced by nginx, one for full website (/),
+# and one for facets. We always allow requests coming from IPs registered in the whitelist
+# below. For the full website, the rate-limit is per-IP. For facets, we limit the trafic
+# globally (one bucket for all IP addresses), by excluding from rate-limits:
+# - known crawlers (based on their User-Agent)
+# - logged-in users (based on the presence of an authentication cookie)
+# - whitelisted IPs
 
+# Exclude specific IP addresses from rate-limit (for both "/" and facets rate-limiters)
 geo $whitelist {
   default 0;
   # CIDR in the list below are not limited
@@ -13,20 +21,53 @@ geo $whitelist {
   91.175.166.38 1;
 }
 
-map $whitelist $limit {
-   0     $binary_remote_addr;
-   1     "";
+# Allow known crawlers to access facet pages without being globally
+# rate-limited
+map $http_user_agent $allowed_user_agent {
+    default 0;
+    ~*Googlebot|Bingbot|CCBot|archive\.org_bot 1;
 }
 
-map $upstream_status $log_access_error {
-	default 0;
-	~^[45]     1;
+# Allow logged-in users to access facets without being globally
+# rate-limited.
+# add a new $auth variable if the "session" cookie is present
+# `$cookie_session` returns the value of the 'session' cookie.
+map $cookie_session $auth {
+    default 1;  # cookie as a value, set `$auth=1`
+    '' 0;  # Cookie is not present (empty value), set `$auth=0`
+}
+
+map "$whitelist$auth$allowed_user_agent" $limit_facets {
+   # $whitelist$no_auth$allowed_user_agent values:
+   # - "000" = not whitelisted + not logged in + not allowed user agents -> DO rate limit (facets)
+   # - "1X" = whitelisted IP -> don't rate limit
+   # - "01X" = not whitelisted + logged in -> don't rate limit
+   # - "001" = not whitelisted + not logged in + allowed user agent -> don't rate limit
+   000   "facets";
+   default    "";
+}
+
+map $whitelist $limit {
+   0     $binary_remote_addr;
+   # In limit_req_zone, requests with an empty key are not accounted. See:
+   # https://nginx.org/en/docs/http/ngx_http_limit_req_module.html#limit_req_zone
+   # So if the IP address is in the whitelist, it disables the rate-limiter for
+   # this IP.
+   1     "";
 }
 
 # create zone "off" for rate limiting 
 limit_req_zone $limit zone=off:10m rate=15r/m;
 limit_req_zone $limit zone=off-api:10m rate=15r/m;
+limit_req_zone $limit_facets zone=off-facets:10m rate=1r/m;
 
+
+# This part allow to create a specific log for errors
+# This will be useful for analysis with fail2ban
+map $upstream_status $log_access_error {
+	default 0;
+	~^[45]     1;
+}
 
 server {
     listen 80;
@@ -115,10 +156,10 @@ server {
 
         # Rate limiting
         #limit_req_log_level error;
-        limit_req zone=off-api burst=10 nodelay; # burst=120 means you can do 240+120 requests
-                                              # before experimenting a 444 error
+        limit_req zone=off-api burst=10 nodelay; # burst=10 means you can do 15+10 requests
+                                              # before experimenting a 429 error
         #limit_req_log_level warn;   # not sure if necessary
-        limit_req_status 444; # allows a specific http status code to clearly
+        limit_req_status 429; # allows a specific http status code to clearly
                               # identify rate limiting
         #limit_req_dry_run on; # Enables the dry run mode. In this mode, requests
                               # processing rate is not limited, however, in the
@@ -128,7 +169,7 @@ server {
     	proxy_cache mycache;
     	proxy_cache_key $host$request_uri$cookie_user;
         proxy_cache_valid any 5s;
-        add_header X-Cache-Status $upstream_cache_status;  
+        add_header X-Cache-Status $upstream_cache_status;
         proxy_pass http://10.1.0.113:80;
 	# proxy_buffering off disables caching
         #proxy_buffering off;
@@ -142,9 +183,16 @@ server {
         error_page 502 /502.html;
     }
 
+    location /facets {
+        limit_req zone=off-facets nodelay;
+        limit_req zone=off burst=10 nodelay;
+        limit_req_status 429;
+
+        proxy_pass http://10.1.0.113:80;
+        include snippets/backend-proxy.conf;
+    }
+
     location / {
-
-
 
 #    	proxy_cache mycache;
 #    	proxy_cache_key $host$request_uri$cookie_user;
@@ -163,6 +211,17 @@ server {
          rewrite ^ /contact-us.txt last;
     }
 
+        # Rate limiting
+        limit_req zone=off burst=10 nodelay; # burst=10 means you can do 15+10 requests
+                                              # before experimenting a 429 error
+        #limit_req_log_level warn;   # not sure if necessary
+        limit_req_status 429; # allows a specific http status code to clearly
+                              # identify rate limiting
+        #limit_req_dry_run on; # Enables the dry run mode. In this mode, requests
+                              # processing rate is not limited, however, in the 
+                              # shared memory zone, the number of excessive requests 
+                              # is accounted as usual.
+
         # cache.
         # https://www.nginx.com/blog/nginx-caching-guide/#Frequently-Asked-Questions-(FAQ)
         # Eg. X-Cache-Status: HIT
@@ -171,26 +230,7 @@ server {
         proxy_pass http://10.1.0.113:80/;
 	# proxy_buffering off disables caching
         #proxy_buffering off;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto https;
-        proxy_set_header Host $host;
-        client_max_body_size 512M;
-
- 	proxy_intercept_errors on;
-        error_page 502 /502.html;
-
-        # Rate limiting
-        limit_req zone=off burst=10 nodelay; # burst=120 means you can do 240+120 requests
-                                              # before experimenting a 444 error
-        #limit_req_log_level warn;   # not sure if necessary
-        limit_req_status 444; # allows a specific http status code to clearly
-                              # identify rate limiting
-        #limit_req_dry_run on; # Enables the dry run mode. In this mode, requests
-                              # processing rate is not limited, however, in the 
-                              # shared memory zone, the number of excessive requests 
-                              # is accounted as usual.
-
+        include snippets/backend-proxy.conf;
     }
     location ~* 502\.(html|jpg)  {
        root /opt/openfoodfacts-infrastructure/html/;
@@ -203,6 +243,4 @@ server {
     }
 
 }
-
-
 
