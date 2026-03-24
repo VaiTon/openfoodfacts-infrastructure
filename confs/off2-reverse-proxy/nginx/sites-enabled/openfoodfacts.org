@@ -33,7 +33,7 @@ map $http_user_agent $whitelist_by_ua {
 map $http_user_agent $deny_user_agents {
     default 0;
     ~*Seekport|Ahrefs|DataForSeo|Seznam|ZoomBot|Mojeek|QRbot|Bytespider|SEOkicks|Searchmetrics|MJ12|SurveyBot|SEOdiver|wotbox|Cliqz|Paracrawl|Scrapy|VelenPublicWebCrawler|Semrush|MegaIndex\.ru|YandexMarket|Amazon|GPTBot|ChatGPT-User|PerplexityBot|ClaudeBot|Claude-Web|cohere-ai|anthropic-ai|ImagesiftBot|Diffbot|Timpibot|meta-webindexer|meta-externalagent|Applebot 1;
-    ~*MyOFFScraper|Vitalyze-Backfill|AvoApp|fernwise-enrich-worker|ShoopsAI|ProductResearch|KakyApp|ConnectedSI-ImageLibrary 1;
+    ~*MyOFFScraper|Vitalyze-Backfill|AvoApp|fernwise-enrich-worker|ShoopsAI|ProductResearch|ConnectedSI-ImageLibrary 1;
     ~*python-requests 1;
 }
 
@@ -108,7 +108,7 @@ limit_req_zone $rl_per_ip_key zone=off-api:10m rate=15r/m;
 limit_req_zone $rl_global_key zone=off-global:10m rate=20000r/m;
 limit_req_zone $rl_api_global_key zone=off-api-global:10m rate=20000r/m;
 # Global rate limit (all IP addresses) for search requests
-limit_req_zone $rl_search_key zone=off-search-global:10m rate=100r/m;
+limit_req_zone $rl_search_key zone=off-search-global:10m rate=60r/m;
 
 
 # This part allow to create a specific log for errors
