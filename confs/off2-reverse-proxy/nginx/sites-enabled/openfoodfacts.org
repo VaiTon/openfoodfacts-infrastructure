@@ -33,7 +33,7 @@ map $http_user_agent $whitelist_by_ua {
 map $http_user_agent $deny_user_agents {
     default 0;
     ~*Seekport|Ahrefs|DataForSeo|Seznam|ZoomBot|Mojeek|QRbot|Bytespider|SEOkicks|Searchmetrics|MJ12|SurveyBot|SEOdiver|wotbox|Cliqz|Paracrawl|Scrapy|VelenPublicWebCrawler|Semrush|MegaIndex\.ru|YandexMarket|Amazon|GPTBot|ChatGPT-User|PerplexityBot|ClaudeBot|Claude-Web|cohere-ai|anthropic-ai|ImagesiftBot|Diffbot|Timpibot|meta-webindexer|meta-externalagent|Applebot 1;
-    ~*MyOFFScraper|Vitalyze-Backfill|AvoApp|fernwise-enrich-worker|ShoopsAI|ProductResearch|ConnectedSI-ImageLibrary 1;
+    ~*MyOFFScraper 1;
     ~*python-requests 1;
 }
 
