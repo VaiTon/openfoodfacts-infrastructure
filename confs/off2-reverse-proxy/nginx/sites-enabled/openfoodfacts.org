@@ -13,7 +13,7 @@ geo $whitelist_by_ip {
   default 0;
   # CIDR in the list below are not limited
   # images.openfoodfacts.org
-  217.182.132.133/24 1;
+  217.182.132.0/24 1;
   # internal trafic
   10.1.0.0/16 1;
   # moji
