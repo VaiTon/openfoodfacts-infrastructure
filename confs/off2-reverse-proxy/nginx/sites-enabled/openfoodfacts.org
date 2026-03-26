@@ -108,7 +108,7 @@ limit_req_zone $rl_per_ip_key zone=off-api:10m rate=15r/m;
 limit_req_zone $rl_global_key zone=off-global:10m rate=20000r/m;
 limit_req_zone $rl_api_global_key zone=off-api-global:10m rate=20000r/m;
 # Global rate limit (all IP addresses) for search requests
-limit_req_zone $rl_search_key zone=off-search-global:10m rate=60r/m;
+limit_req_zone $rl_search_key zone=off-search-global:10m rate=120r/m;
 
 
 # This part allow to create a specific log for errors
