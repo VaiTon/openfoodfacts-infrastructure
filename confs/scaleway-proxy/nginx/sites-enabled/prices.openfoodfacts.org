@@ -1,7 +1,9 @@
 server {
-    listen 443;
-    listen [::]:443;
+    listen 443 ssl;
+    listen [::]:443 ssl;
     server_name  prices.openfoodfacts.org;
+
+    http2 on;
 
     access_log  /var/log/nginx/prices.log  main;
     error_log   /var/log/nginx/prices.err;

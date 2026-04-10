@@ -55,7 +55,7 @@ server {
     # access logs only on the container
     access_log off;
     # logs errors location
-    access_log  /var/log/nginx/openbeautyacts.org.access-errors.log  main buffer=256K flush=1s if=$error_log;
+    access_log  /var/log/nginx/openbeautyfacts.org.access-errors.log  main buffer=256K flush=1s if=$error_log;
     error_log   /var/log/nginx/openbeautyfacts.org.errors.log;
 
     # Cache small static assets that are frequently requested
