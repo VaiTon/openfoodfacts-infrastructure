@@ -4,7 +4,7 @@ As we're running out of disk space again on ovh, and as Open Prices images now t
 
 ## Creating ZFS datasets and docker-prod VM
 
-The process is the same as for (docker-prod VM install on scaleway-02)[./2025-11-27-moving-keycloak-to-scaleway.md].
+The process is the same as for [docker-prod VM install on scaleway-02](./2025-11-27-moving-keycloak-to-scaleway.md).
 
 The ID of the VM will be 201.
 
@@ -82,7 +82,6 @@ ZFS datasets and virtiofs are now configured on scaleway-03.
 
 We now create a VM template. Following what was done on scaleway-02:
 
-```bash
 ```bash
 cd /home/raphael0202
 # navigate from https://cloud.debian.org/images/cloud to retrieve the name
@@ -341,7 +340,7 @@ I then run rsync to synchronize the images that were deleted from the OVH server
 rsync -a --info=progress2 scaleway-03:/zfs-hdd/open-prices-images/ /var/lib/docker/volumes/open_prices_images/_data
 ```
 
-Note that we didn't add the `--delete` flag, to avoid deleting the images that were transfered from OVH to scaleway-docker-prod.
+Note that we didn't add the `--delete` flag, to avoid deleting the images that were transferred from OVH to scaleway-docker-prod.
 
 On **docker-prod**, I deleted the now legacy volume to save disk space:
 
