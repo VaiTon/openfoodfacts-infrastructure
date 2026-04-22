@@ -21,6 +21,8 @@ geo $whitelist_by_ip {
   45.147.209.254 1;
   # ?
   91.175.166.38 1;
+  # stephane, needed for temporary script
+  88.164.22.38 1;
 }
 
 map $http_user_agent $whitelist_by_ua {
