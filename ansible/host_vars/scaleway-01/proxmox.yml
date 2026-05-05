@@ -60,6 +60,27 @@ proxmox_containers__containers:
     disk:
       storage: zfs-hdd-pve
       size: 32
+    idmap: &off-containers-idmap
+      - content: "u 0 100000 999"
+      - content: "g 0 100000 999"
+      - content: "u 1000 1000 64536"
+      - content: "g 1000 1000 64536"
+  - id: 112
+    hostname: off-pro
+    features:
+      - nesting=1
+    cores: 8
+    memory: "{{ 32 * 1024 }}"
+    netif:
+      net0:
+        name: eth0
+        ip: 10.13.1.112/16
+        gw: 10.13.0.1
+        bridge: vmbr10
+    disk:
+      storage: zfs-hdd-pve
+      size: 30
+    idmap: *off-containers-idmap
   - id: 113
     hostname: obf
     features:
@@ -75,11 +96,7 @@ proxmox_containers__containers:
     disk:
       storage: zfs-hdd-pve
       size: 30
-    idmap: &off-containers-idmap
-      - content: "u 0 100000 999"
-      - content: "g 0 100000 999"
-      - content: "u 1000 1000 64536"
-      - content: "g 1000 1000 64536"
+    idmap: *off-containers-idmap
   - id: 114
     hostname: opf
     features:
