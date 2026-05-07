@@ -107,10 +107,10 @@ limit_req_zone $rl_per_ip_key zone=off:10m rate=15r/m;
 limit_req_zone $rl_per_ip_key zone=off-api:10m rate=15r/m;
 # This global rate limit protects the /facets and /product routes.
 # It allows to limit the trafic on the backend in case of a traffic spike
-limit_req_zone $rl_global_key zone=off-global:10m rate=30000r/m;
-limit_req_zone $rl_api_global_key zone=off-api-global:10m rate=30000r/m;
+limit_req_zone $rl_global_key zone=off-global:10m rate=60000r/m;
+limit_req_zone $rl_api_global_key zone=off-api-global:10m rate=60000r/m;
 # Global rate limit (all IP addresses) for search requests
-limit_req_zone $rl_search_key zone=off-search-global:10m rate=200r/m;
+limit_req_zone $rl_search_key zone=off-search-global:10m rate=600r/m;
 
 
 # This part allow to create a specific log for errors
