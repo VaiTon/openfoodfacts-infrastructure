@@ -31,6 +31,11 @@ geo $rate_limit_whitelist {
   91.175.166.38 1;
   # robotoff
   45.147.209.254 1;
+  # scaleway
+  151.115.132.10 1;
+  151.115.132.11 1;
+  151.115.132.12 1;
+  151.115.132.13 1;
 }
 map $rate_limit_whitelist $big_rate_key {
   default $big_rate_key_pre;
@@ -115,7 +120,7 @@ server {
 	}
 
 	location @proxy2 {
-		proxy_pass		https://proxy2.openfoodfacts.org;
+		proxy_pass		https://world.openfoodfacts.org;
 #		proxy_next_upstream	error	 http_404;
 		proxy_http_version	1.1;
 		proxy_set_header	Connection	"";
