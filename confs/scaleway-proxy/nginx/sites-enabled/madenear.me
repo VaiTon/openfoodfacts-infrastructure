@@ -48,7 +48,8 @@ server {
     # Harden SSL
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_prefer_server_ciphers on;
-    ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+    # see https://developers.cloudflare.com/ssl/origin-configuration/cipher-suites/#tls-13-cipher-suites
+    ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305";
     ssl_ecdh_curve secp384r1;
     #ssl_session_cache shared:SSL:10m;
     ssl_session_tickets off;
