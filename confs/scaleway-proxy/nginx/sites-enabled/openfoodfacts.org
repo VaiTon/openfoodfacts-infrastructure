@@ -196,8 +196,9 @@ server {
 
     location /api/ {
         # Rate limiting
-        limit_req zone=off-api-global nodelay;
-        # # burst=10 means you can do 15+10 requests before experimenting a 429 error
+	# 2026-06-02: disable the global API rate-limiter, as we've moved servers
+	## limit_req zone=off-api-global nodelay;
+        # burst=10 means you can do 15+10 requests before experimenting a 429 error
         limit_req zone=off-api burst=10 nodelay;
         # allows a specific http status code to clearly identify rate limiting
         limit_req_status 429;
