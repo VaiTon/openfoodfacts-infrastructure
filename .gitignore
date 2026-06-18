@@ -183,7 +183,6 @@ cython_debug/
 
 # Mirabelle
 scripts/mirabelle/archives/
-scripts/mirabelle/logs/
 scripts/mirabelle/*.bak
 scripts/mirabelle/*.db
 scripts/mirabelle/*.db-shm

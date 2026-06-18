@@ -36,6 +36,7 @@ export PATH="/usr/local/bin:$PATH"
 #TAGLINE="<p style='color: blue;'>Happy new year! DECEMBER CHALLENGE: we did it! We have gone below 4.9%. Thanks everyone!</p>"
 #TAGLINE="<p style='color: blue;'>Stats are not so good, don't forget to do your homework :) Thanks everyone!</p>"
 #TAGLINE="We have removed more than 13,000 data quality errors on Friday 06/12. Stats should reflect this."
+TAGLINE="<p style='color: red;'> Stats in this email will be wrong until new information.</p>"
 
 # ---- Requirements
 # * sqlite (standard Debian package)
@@ -104,13 +105,36 @@ log "Reading usefull data..."
 lastProductEditedOn=$(sqlite3 products.db "select last_modified_datetime from [all] order by last_modified_datetime desc limit 1;")
 # Exit after 18 retries if the database is not up to date
 counter=1
-while [[ "${lastProductEditedOn}" != "${TODAY}"* ]]; do
+email=$(cat <<EOF
+From: Data Quality Daily<contact@openfoodfacts.org>
+To: tech@openfoofacts.org
+Subject: ERROR: Open Food Facts data-quality daily
+MIME-Version: 1.0
+Content-type: charset=UTF-8
+The Mirabelle DB does not contain any product modified today.
+
+sqlite3 products.db "select last_modified_datetime from [all] order by last_modified_datetime desc limit 1;"
+
+is producing:
+
+${lastProductEditedOn}
+
+See: https://mirabelle.openfoodfacts.org/products?sql=select+*+from+%5Ball%5D+order+by+created_datetime+desc+limit+21
+
+EOF
+)
+while [[ "${lastProductEditedOn}" != "${TODAY}" ]]; do
   # Exit after 60 tries (900 min = 15 hours)
-  [[ "${counter}" -gt 90 ]] && { log "Retried ${counter} times, now exit..."; exit 1; }
+  if [[ "${counter}" -gt 90 ]] ; then
+    log "Retried ${counter} times, now exit..."
+    echo "${email}" | sendmail -t
+    break
+    #exit 1;
+  fi
   ((counter++))
   log "Last product edited on products.db: ${lastProductEditedOn}. DB is not up to date. Retrying in 10 minutes..."
-  [[ ${mode} == "noupdates" ]] && break
-  [[ ${mode} == "test" ]] && break
+  [[ ${mode} == "--noupdates" ]] && break
+  [[ ${mode} == "--test" ]] && break
   sleep 10m
   lastProductEditedOn=$(sqlite3 products.db "select last_modified_datetime from [all] order by last_modified_datetime desc limit 1;")
 done
