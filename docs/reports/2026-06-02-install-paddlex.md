@@ -1,13 +1,13 @@
 # 2026-06-02 Install PaddleX on osm45 (docker-prod-2)
 
-To anonymize receipt on Open Prices, we chose to detect personal information using a LVLM (large visual language model), as these model provide very performant and context-aware PII detection. However, LVLMs are still not very good at localizing exactly where the PII is located on the image.
+To anonymize receipt on Open Prices, we chose to detect personal information using a LVLM (large visual language model), as these models provide very performant and context-aware PII detection. However, LVLMs are still not very good at localizing exactly where the PII is located on the image.
 We chose the following approach:
 
 1. Use a LVLM to detect PII (as text) on the image
 2. Use a PaddleX model to perform OCR and get each word's bounding box coordinates.
 3. Localize the PII on the image using the bounding box coordinates.
 
-Not many open source solution exist to perform traditional OCR: Tesseract and PaddleOCR.
+Not many open source solutions exist to perform traditional OCR: Tesseract and PaddleOCR.
 
 We chose PaddleOCR, as it provides better performance out of the box than Tesseract.
 
@@ -49,7 +49,7 @@ docker push openfoodfacts/paddlex-ocr:paddlex3.3.11-paddlepaddle3.2.0-cpu
 You can then pull and run the image:
 
 ```bash
-docker run -v paddlex-models:/root/.paddlex/official_models --shm-size=8g -it paddlex:paddlex3.3.11-paddlepaddle3.2.0-cpu /bin/bash
+docker run -v paddlex-models:/root/.paddlex/official_models --shm-size=8g -it openfoodfacts/paddlex-ocr:paddlex3.3.11-paddlepaddle3.2.0-cpu /bin/bash
 ```
 
 
