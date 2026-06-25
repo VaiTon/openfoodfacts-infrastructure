@@ -63,7 +63,11 @@ Host hetzner-02-proxmox
     LocalForward 8007 127.0.0.1:8006
 ```
 
-If you run `ssh hetzner-02-proxmox`, you should be able to display the Proxmox admin interface on [https://127.0.0.1:8007](https://127.0.0.1:8007)!
+If you run `ssh hetzner-02-proxmox`, you should be able to display the Proxmox admin interface on [https://127.0.0.1:8007](https://127.0.0.1:8007)! [^ssh_minus_l] [^different_ports]
+
+[^ssh_minus_l]: you could also have no specific ssh_config horst and manually type: `ssh -L 8007:127.0.0.1:8006`
+
+[^different_ports]: it's a good idea to use a different local port for each cluster, so that your browser can associate the address with your proxmox login/password.
 
 A login prompt looking as follow asks you to login:
 
