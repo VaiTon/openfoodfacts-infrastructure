@@ -2,7 +2,7 @@
 
 ## Created CT
 
-I created a CT on off2 followings [How to create a new Container](../proxmox.md#how-to-create-a-new-container):
+I created a CT on off2 followings [How to create a new Container](../explanation/proxmox.md#how-to-create-a-new-container):
 * id 122 (off-redis)
 * 20Gb disk on zfs-hdd, noatime
 * added a disk on zfs-nvme mounted on /var/lib/redis/ with 5Gb size and noatime option.
@@ -11,7 +11,7 @@ I created a CT on off2 followings [How to create a new Container](../proxmox.md#
 
 I did not create a user.
 
-I also [configure postfix](../mail.md#postfix-configuration) and [tested it](../mail.md#testing-that-the-gateway-is-well-configured).
+I also [configure postfix]../explanation/mail.md#postfix-configuration) and [tested it]../explanation/mail.md#testing-that-the-gateway-is-well-configured).
 
 Cloned this repository in [/opt using a root key as deploy key](../how-to/how-to-have-server-config-in-git.md)
 

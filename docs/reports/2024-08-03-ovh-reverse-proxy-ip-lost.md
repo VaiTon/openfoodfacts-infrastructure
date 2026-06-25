@@ -114,5 +114,5 @@ We now have an IP address that is under the control of our team.
 Some possible actions in the future:
 * We could use this more:
   * for example to setup a second reverse proxy on ovh2, and have a failover.
-  * We could also use additional IP for the [mail gateway](../mail.md).
+  * We could also use additional IP for the [mail gateway]../explanation/mail.md).
 * We should investigate using IPv6 on those containers

@@ -2,7 +2,7 @@
 
 **Note**: Remember this documents keeps track of installation, it might not be complete or up-to-date
 
-See also: [the mail documentation](../mail.md)
+See also: [the mail documentation]../explanation/mail.md)
 
 ## Proxmox Mail Gateway install
 

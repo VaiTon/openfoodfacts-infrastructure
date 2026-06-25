@@ -56,7 +56,7 @@ see [2024-09-05 adding ipv6 to off2](./2024-09-05-adding-ipv6-to-off2.md)
 
 ### Creating stunnel-client container on off2
 
-Created container ([see doc](../proxmox.md/#how-to-create-a-new-container)):
+Created container ([see doc](../explanation/proxmox.md/#how-to-create-a-new-container)):
 * 103, stunnel-client, unpriviledge, with nesting.
 * using debian 12
 * disk 6G noatime, 2cores, 512Mb memory

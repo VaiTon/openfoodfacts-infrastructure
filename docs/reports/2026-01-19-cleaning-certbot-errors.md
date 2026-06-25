@@ -29,7 +29,7 @@ janv. 19 03:13:10 proxy certbot[11030]: Attempting to renew cert (metabase.openf
 
 There are 404 and 401 problems.
 
-See [Certbot debugging tips](../nginx-reverse-proxy.md#certbot-debugging-tips)
+See [Certbot debugging tips](../explanation/nginx-reverse-proxy.md#certbot-debugging-tips)
 
 ## Removing old monitoring services
 

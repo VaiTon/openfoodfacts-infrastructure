@@ -2,7 +2,7 @@
 
 ## installing rest-framework
 
-Following [our odoo documentation](../odoo.md#contributed-modules-from-oca-store)
+Following [our odoo documentation](../explanation/services/odoo.md#contributed-modules-from-oca-store)
 
 And finally I may not need this… as it is intended as a framework 
 Et en fait … j'en ai pas vraiment besoin car c'est pour dev des modèles spécifiques dans odoo (ce que je veux éviter pour le moment).

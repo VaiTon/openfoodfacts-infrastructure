@@ -70,7 +70,7 @@ syncoid --no-sync-snap zfs-hdd/off-backups/off2-zfs-hdd/off/orgs zfs-nvme/off-ba
 
 ## Preparing target off container
 
-First create the 111 container named off using ansible (see [proxmox - How to create a new container with ansible](../proxmox.md#how-to-create-a-new-container-with-ansible))
+First create the 111 container named off using ansible (see [proxmox - How to create a new container with ansible](../explanation/proxmox.md#how-to-create-a-new-container-with-ansible))
 following what was done for 115 (opff).
 
 On scaleway-01:
@@ -172,7 +172,7 @@ You might use this configuration to do a quick test that your reverse proxy is s
 KS1 will have to sync images from scaleway,
 for this we need to have an operator on scaleway-01 for it.
 
-I just followed [our sanoid doc on creating operator on PROD_SERVER](../sanoid.md#creating-operator-on-prod_server)
+I just followed [our sanoid doc on creating operator on PROD_SERVER](../explanation/software/sanoid.md#creating-operator-on-prod_server)
 
 
 ## Migration
@@ -376,7 +376,7 @@ Post fixes:
   was not defined any more, while query was a CNAME to it…
   So I redefined proxy2 as an A entry pointing to off2 reverse proxy IP
 * https://robotoff.openfoodfacts.org/api/v1/health
-* I had to whitelist scaleway servers [in PMG](../mail.md#adding-a-new-server) because emails were not arriving (I previously think it was not mandatory, because I though the iptables redirect rule was masking the real ip)
+* I had to whitelist scaleway servers [in PMG]../explanation/mail.md#adding-a-new-server) because emails were not arriving (I previously think it was not mandatory, because I though the iptables redirect rule was masking the real ip)
 * we had to whitelist the scaleway-01 ip on brevo,
   as openfoodfacts use the API key to subscribe users to the mailing list.
 * the certbot certificates renewal did not get well, see belw

@@ -227,7 +227,7 @@ I also edited pro.openfoodfacts.org conf
 
 ### Preparing container
 
-First create the 112 container named off-pro using ansible (see [proxmox - How to create a new container with ansible](../proxmox.md#how-to-create-a-new-container-with-ansible))
+First create the 112 container named off-pro using ansible (see [proxmox - How to create a new container with ansible](../explanation/proxmox.md#how-to-create-a-new-container-with-ansible))
 following what was done for 115 (opff).
 
 On scaleway-01:

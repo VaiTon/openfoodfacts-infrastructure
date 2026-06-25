@@ -14,7 +14,7 @@ Was already [done for off-query](./2024-04-12-install-off-query-off1.md#adding-o
 
 ## Creating the container
 
-Created a container following usual steps on [creating a container](../proxmox.md#how-to-create-a-new-container)
+Created a container following usual steps on [creating a container](../explanation/proxmox.md#how-to-create-a-new-container)
 
 I used:
 * number 104
@@ -104,7 +104,7 @@ chmod go-rwx -R /home/off/.ssh
 
 ## Create an account for John
 
-I created a new account for John on the container following [proxmox - how to create a user in a Container or VM](../proxmox.md#how-to-create-a-user-in-a-container-or-vm)
+I created a new account for John on the container following [proxmox - how to create a user in a Container or VM](../explanation/proxmox.md#how-to-create-a-user-in-a-container-or-vm)
 
 ## Prepare keycloak install
 

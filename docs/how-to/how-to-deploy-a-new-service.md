@@ -9,13 +9,13 @@ It's important to keep those things in mind when deploying a new service.
 
 First you have to decide the way you will deploy your service:
 
-* using [docker-compose](../docker_architecture.md) is the preferred way to deploy a service that have developments.
-  It enables an easy updgrade of main components, a good reproducibility of the environment,
-  and a good integration in [CI/CD tools](../cicd.md)
+* using [docker-compose](../explanation/docker_architecture.md) is the preferred way to deploy a service that have developments.
+  It enables an easy updrade of main components, a good reproducibility of the environment,
+  and a good integration in [CI/CD tools](../explanation/cicd.md)
 
   Docker compose are to be deployed in a VM. We are also experimenting deploying them in containers, but there is no official support for that.
 
-* using a [proxmox container](../proxmox.md#how-to-create-a-new-container) is the second best option.
+  * using a [proxmox container](../explanation/proxmox.md#how-to-create-a-new-container) is the second best option.
   Use this if you deploy a service that is packaged in debian,
   or that updates easily in such environment (eg. a PHP software).
 
@@ -52,7 +52,7 @@ If your service is heavy duty, try to do some performance check in staging.
 After deployment you should also check
 how the new service impacts the performance of the whole system.
 
-[Munin](../munin.md) offers a good way to check that,
+[Munin](../explanation/software/munin.md) offers a good way to check that,
 as you can compare performances before and after deployment.
 
 Some key indicators to monitor:

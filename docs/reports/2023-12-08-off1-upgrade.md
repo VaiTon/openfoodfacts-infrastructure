@@ -462,11 +462,11 @@ git clone git@github.com:openfoodfacts/openfoodfacts-infrastructure.git
 
 ## Adding Munin monitoring
 
-Simply following [our Munin doc on how to configure a server](../munin.md#how-to-configure-a-server)
+Simply following [our Munin doc on how to configure a server](../explanation/software/munin.md#how-to-configure-a-server)
 
 ## Configuring snapshots and syncoid
 
-I first installed sanoid following [install instructions](../sanoid.md#how-to-build-and-install-sanoid-deb)
+I first installed sanoid following [install instructions](../explanation/software/sanoid.md#how-to-build-and-install-sanoid-deb)
 
 We want to pull snapshots from off1 and to let ovh3 pull our snapshots.
 

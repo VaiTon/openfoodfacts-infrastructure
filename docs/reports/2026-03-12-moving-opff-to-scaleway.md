@@ -194,7 +194,7 @@ We will keep the instance private because modifying some data but not others mig
 To create the container I used ansible, promox-node site.
 But I didn't use the configure job, as I will replace the root dir
 with the one from off2.
-See [proxmox - How to create a new container with ansible](../proxmox.md#how-to-create-a-new-container-with-ansible)
+See [proxmox - How to create a new container with ansible](../explanation/proxmox.md#how-to-create-a-new-container-with-ansible)
 
 We create the container with a disk, but this disk will be throne away to replace with opff current disk (or a clone, while testing).
 
@@ -574,6 +574,4 @@ cat /etc/pve/lxc/118.conf
 
 
 We don't need a lot of the mount points, and will evict them.
-We just create the container, 
-
-
+We just create the container,

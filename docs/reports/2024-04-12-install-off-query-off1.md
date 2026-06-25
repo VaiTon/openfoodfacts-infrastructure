@@ -23,7 +23,7 @@ overlay
 
 ## Creating the container
 
-Created a container following usual steps on [creating a container](../proxmox.md#how-to-create-a-new-container)
+Created a container following usual steps on [creating a container](../explanation/proxmox.md#how-to-create-a-new-container)
 
 I used:
 * number 115
@@ -120,7 +120,7 @@ After some iterations, it's deploying.
 
 ## Setup reverse proxy
 
-I setup the reverse proxy on off2 to [configure a new service](../nginx-reverse-proxy.md#configuring-a-new-service)
+I setup the reverse proxy on off2 to [configure a new service](../explanation/nginx-reverse-proxy.md#configuring-a-new-service)
 copying the file we have on ovh1 reverse proxy, but adding a -tmp to certificates names, and copying corresponding certs from ovh1 reverse proxy and add them with "-tmp" suffix, and changing proxying ip !
 
 I can test it from the reverse proxy with: `curl 10.1.0.115:5511/health`.
@@ -243,7 +243,7 @@ systemctl reload nginx
 
 Open Food Facts Produc Opener instance was using off-query public address to access the service.
 But due to a limitation on routing in proxmox,
-[we can't access services hosted on same proxmox cluster using the off2 reverse proxy](../nginx-reverse-proxy.md#never-call-an-internal-service-using-reverse-proxy).
+[we can't access services hosted on same proxmox cluster using the off2 reverse proxy](../explanation/nginx-reverse-proxy.md#never-call-an-internal-service-using-reverse-proxy).
 
 So in fact Product Opener was expecting a response that did not came, until timeout.
 This had the bad side effect of monopolizing workers…
@@ -264,4 +264,3 @@ I then renamed the folder, (to avoid confusions).
 I also restored values of envs in my PR, and merged it.
 
 I removed the temporary env in github configuration and changes secrets for off-query-org.
-

@@ -13,7 +13,7 @@ I (Stéphane) will follow what was done by Alex for the reverse proxy on off2: 2
 
 ### Installing Container
 
-I followed [How to create a new Container](../proxmox.md#how-to-create-a-new-container)
+I followed [How to create a new Container](../explanation/proxmox.md#how-to-create-a-new-container)
 
 I chose 4 cpu, 2 Gb RAM, 32 Gb disk (same as proxy on off2)
 
@@ -26,7 +26,7 @@ Network: name=eth0,bridge=vmbr1,ip=10.1.0.100/24,gw=10.0.0.1
 
 I then simply install `nginx` using apt.
 
-I also [configure postfix](../mail.md#postfix-configuration) and tested it.
+I also [configure postfix]../explanation/mail.md#postfix-configuration) and tested it.
 
 ### Adding the IP
 

@@ -121,7 +121,7 @@ We follow https://matomo.org/faq/troubleshooting/faq_19489/ and thus https://mat
 
 On analytics (container 107):
 
-- ensure [mail is setup correctly on the server](../mail.md#servers)
+- ensure [mail is setup correctly on the server]../explanation/mail.md#servers)
 
 - create directory for logs:
   ```

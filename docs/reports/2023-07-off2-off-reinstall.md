@@ -36,7 +36,7 @@ zpool add zfs-hdd cache nvme3n1p2
 
 ### Created CT
 
-I created a CT for OFF followings [How to create a new Container](../proxmox.md#how-to-create-a-new-container) it went all smooth.
+I created a CT for OFF followings [How to create a new Container](../explanation/proxmox.md#how-to-create-a-new-container) it went all smooth.
 
 It's 120 (off-postgres)
 
@@ -45,7 +45,7 @@ I added a disk on zfs-nvme mounted on /var/lib/postgresql/ with 5Gb size and noa
 
 I did not create a user.
 
-I also [configure postfix](../mail.md#postfix-configuration) and tested it.
+I also [configure postfix]../explanation/mail.md#postfix-configuration) and tested it.
 
 ### Installed Postgres
 
@@ -103,12 +103,12 @@ We have two errors, but they are expected.
 
 ### Creating the container
 
-I created a CT for OFF followings [How to create a new Container](../proxmox.md#how-to-create-a-new-container) it went all smooth.
+I created a CT for OFF followings [How to create a new Container](../explanation/proxmox.md#how-to-create-a-new-container) it went all smooth.
 
 It's 121 (off-memcached)
 I choosed a 15Gb disk on zfs-hdd, 0B swap, 2 Cores and 4 Gb memory.
 
-I also [configure postfix](../mail.md#postfix-configuration) and tested it.
+I also [configure postfix]../explanation/mail.md#postfix-configuration) and tested it.
 
 I did not create a user.
 
@@ -516,12 +516,12 @@ Old logs were copied to ovh3:/rpool/backups/off1/srv/off/logs
 
 ## Creating Containers
 
-I created a CT for OFF followings [How to create a new Container](../proxmox.md#how-to-create-a-new-container) it went all smooth.
+I created a CT for OFF followings [How to create a new Container](../explanation/proxmox.md#how-to-create-a-new-container) it went all smooth.
 I choosed a 30Gb disk, 0B swap, 8 Cores and 40 Gb memory.
 
 Note that my first container creation failed because unable to mount the ZFS volume ("zfs dataset is busy"…), I had to destroy the dataset and re-create the container.
 
-I also [configure postfix](../mail.md#postfix-configuration) and tested it.
+I also [configure postfix]../explanation/mail.md#postfix-configuration) and tested it.
 
 **Important:** do not create any user until you changed id maping in lxc conf (see [Mounting volumes](#mounting-volumes)). And also think about creating off user before any other user to avoid having to change users uids, off must have uid 1000.
 

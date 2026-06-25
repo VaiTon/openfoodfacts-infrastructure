@@ -42,7 +42,7 @@ flowchart TB
 
 ### Installing Container
 
-I followed [How to create a new Container](../proxmox.md#how-to-create-a-new-container)
+I followed [How to create a new Container](../explanation/proxmox.md#how-to-create-a-new-container)
 
 I add a problem running `ct_postinstall` as it wasn't able to fetch debian archives. Indeed there was no network in the CT.
 
@@ -64,13 +64,13 @@ I add a problem running `ct_postinstall` as it wasn't able to fetch debian archi
 
 I then simply install `nginx` and `stunnel4` using apt.
 
-I also [configure postfix](../mail.md#postfix-configuration) and tested it.
+I also [configure postfix]../explanation/mail.md#postfix-configuration) and tested it.
 
 ### Adding the IP
 
 Using proxmox interface, on container 110, I add net1, on vmbr0, IP 213.36.253.214/27, Gateway 213.36.253.222 (copied from Host config).
 
-**Important**: I removed the gateway on net0 (see [here](../nginx-reverse-proxy.md#network-specific-interface)).
+**Important**: I removed the gateway on net0 (see [here](../explanation/nginx-reverse-proxy.md#network-specific-interface)).
 
 I reboot the container 101, and it seems to work.
 
@@ -501,10 +501,10 @@ I also did it for the data and cache dataset:
 
 ### Creating Container
 
-I created a CT followings [How to create a new Container](../proxmox.md#how-to-create-a-new-container) it went all smooth.
+I created a CT followings [How to create a new Container](../explanation/proxmox.md#how-to-create-a-new-container) it went all smooth.
 I choosed a 30Gb disk, 0B swap, 4 Cores and 6 Gb memory.
 
-I also [configure postfix](../mail.md#postfix-configuration) and tested it.
+I also [configure postfix]../explanation/mail.md#postfix-configuration) and tested it.
 
 
 ### Installing packages
@@ -1441,7 +1441,7 @@ We can see if we will be able to use mongoexport
 
 ## OPFF NGINX reverse proxy configuration
 
-We follow [Steps to create Nginx configuration](../nginx-reverse-proxy.md#steps-to-create-nginx-configuration)
+We follow [Steps to create Nginx configuration](../explanation/nginx-reverse-proxy.md#steps-to-create-nginx-configuration)
 but we put host in `/opt/openfoodfacts-infrastructure/confs/proxy-off/nginx`
 
 See also how we [setup wildcard certificates, above](#certbot-wildcard-certificates-using-ovh-dns)
@@ -1929,4 +1929,4 @@ $ find /srv/opff-old/ -xdev -type l -exec ls -l \{\} \;
 - Generate JS assets via github action and add to release
 - Minions for off
 - pb madenearme - WONTFIX ?
-- 
+-

@@ -5,17 +5,6 @@ nav:
   # order by documentation type and some exceptions
   # it would be better to find a good prefix system
   - index.md
-  - "Tutorials": "tutorials"
-  - prod-architecture.md
-  - proxmox.md
-  - free-datacenter.md
-  - moji-datacenter.md
-  - ovh-servers.md
-  - hetzner-servers.md
-  # - ... | intro*.md
-  # - ... | tutorial*.md
-  - ...
   - "How To": "how-to"
-  - ... | explain*.md
-  - ... | ref*.md
-  - ... | logs*.md
+  - "Explanation": "explanation"
+  - "Reference": "reference"

@@ -96,7 +96,7 @@ So we configure sanoid to do so.
 
 On Moji, we don't currently sync data from ovh3.
 
-I [setup an operator account](../sanoid.md#how-to-setup-synchronization-without-using-root) on ovh3 for moji.
+I [setup an operator account](../explanation/software/sanoid.md#how-to-setup-synchronization-without-using-root) on ovh3 for moji.
 
 Created the syncoid-args.conf file.
 
@@ -166,4 +166,3 @@ zfs destroy rpool/subvol-120-disk-0 -r
 # off-net2
 zfs destroy rpool/subvol-122-disk-0 -r
 ```
-

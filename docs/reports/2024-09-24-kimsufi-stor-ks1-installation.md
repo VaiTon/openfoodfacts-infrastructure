@@ -57,9 +57,9 @@ I also configured email by removing exim4 and installing postfix.
 sudo apt purge exim4-base exim4-config && \
 sudo apt install postfix bsd-mailx
 ```
-and following [Server, postfix configuration](../mail.md#postfix-configuration).
+and following [Server, postfix configuration]../explanation/mail.md#postfix-configuration).
 
-I also had to had ks1 ip address to [forwarding rules on ovh1 to the mail gateway](../mail.md#redirects).
+I also had to had ks1 ip address to [forwarding rules on ovh1 to the mail gateway]../explanation/mail.md#redirects).
 ```bash
 iptables -t nat -A PREROUTING -s 217.182.132.133 -d pmg.openfoodfacts.org -p tcp  --dport 25 -j DNAT --to 10.1.0.102:25
 iptables-save > /etc/iptables/rules.v4.new
@@ -89,7 +89,7 @@ Then run `update-initramfs -u -k all`
 
 `lsblk` shows me existing disks. The 4 disks are available, system is installed on the NVME SSD.
 
-So I created the pool with them (see [How to create a zpool](../zfs-overview.md#how-to-create-a-zpool))
+So I created the pool with them (see [How to create a zpool](../explanation/zfs-overview.md#how-to-create-a-zpool))
 
 ```bash
 zpool create zfs-hdd /dev/sd{a,b,c,d}
@@ -131,7 +131,7 @@ zfs create zfs-hdd/off
 
 I 'll sync the data from OVH3 since it's the same data-center.
 
-I created a ks1operator user on ovh3, following [creating operator on PROD_SERVER](../sanoid.md#creating-operator-on-prod_server)
+I created a ks1operator user on ovh3, following [creating operator on PROD_SERVER](../explanation/software/sanoid.md#creating-operator-on-prod_server)
 
 I also had to make a `ln -s /usr/sbin/zfs /usr/bin/zfs` on ovh3
 

@@ -52,7 +52,7 @@ I recommend to choose a randomly-generated 21 characters password from the `a-zA
 
 The `reverse_proxy_docker__https_cert_domains` variable will create a wildcard https certificate for the domains in this list (it defaults to `["openfoodfacts.org"]`).
 
-To generate those certificates, we use a DNS challenge and the OVH API. See [docs/nginx-reverse-proxy.md How to add wildcard certificates](../../../docs/nginx-reverse-proxy.md) on how to generate them, and put the credentials in the variables stated above.
+To generate those certificates, we use a DNS challenge and the OVH API. See [docs/nginx-reverse-proxy.md How to add wildcard certificates](../../../docs/explanation/nginx-reverse-proxy.md) on how to generate them, and put the credentials in the variables stated above.
 
 For security reasons, generate a new OVH API key for each node.
 

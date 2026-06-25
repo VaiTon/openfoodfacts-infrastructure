@@ -8,7 +8,7 @@ so we need to set it up in Free data center (yes it could also bring it to main 
 
 We ask for ipv6 configuration to our referent at Free, which is sponsoring the hosting of these two servers.
 
-See page [Free Data Center](../free-datacenter.md#ipv6)
+See page [Free Data Center](../reference/free-datacenter.md#ipv6)
 
 ## Setting up ipv6 on off2
 
@@ -50,6 +50,3 @@ I assigned `fd28:7f08:b8fe:0::103/64` to the stunnel-client container with `fd28
 Testing on stunnel-client container, by:
 * first pinging the gateway: `ping -6 fd28:7f08:b8fe:0::1`
 * and then pinging osm45: `ping -6 2a06:c484:5::45`
-
-
-

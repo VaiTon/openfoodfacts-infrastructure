@@ -13,29 +13,29 @@ Proxmox is an open-source server virtualization management solution that we use 
 Some software is installed / deployed in containers.
 Docker deployments normally use a VM.
 
-For more details about our Proxmox setup and management, see [Proxmox](./proxmox.md).
+For more details about our Proxmox setup and management, see [Proxmox](./explanation/proxmox.md).
 
 ### Server Configuration Management
 
-We manage server configurations using Git. Each server has a clone of this repository, and configuration files are symlinked to the appropriate locations. This allows us to track changes, maintain consistency, and easily roll back to previous configurations if needed. For more details, see [Explanation on server configuration with git](./explain-server-config-in-git.md).
+We manage server configurations using Git. Each server has a clone of this repository, and configuration files are symlinked to the appropriate locations. This allows us to track changes, maintain consistency, and easily roll back to previous configurations if needed. For more details, see [Explanation on server configuration with git](./explanation/explain-server-config-in-git.md).
 
 ### Continuous Integration and Continuous Delivery (CICD)
 
-We use a lot CICD process to automate the integration of code changes. This ensures all tests pass and desired quality standards are met. Our CICD process includes automated testing, building Docker containers, and, for some software, deploying to pre-production and production environments. For more information, see [CICD](./cicd.md).
+We use a lot CICD process to automate the integration of code changes. This ensures all tests pass and desired quality standards are met. Our CICD process includes automated testing, building Docker containers, and, for some software, deploying to pre-production and production environments. For more information, see [CICD](./explanation/cicd.md).
 
 ### Docker
 
 Docker is a one of the key component of our infrastructure. We use Docker to containerize our applications, ensuring consistency and ease of deployment. Docker Compose is used for orchestration, allowing us to manage multi-container applications with ease. For more details, 
 
 see:
-- [Docker at Open Food Facts](./docker.md).
-- [Docker Onboarding](./docker_onboarding.md)
-- [Docker Infrastructure](./docker_architecture.md)
+- [Docker at Open Food Facts](./explanation/docker.md).
+- [Docker Onboarding](./explanation/docker_onboarding.md)
+- [Docker Infrastructure](./explanation/docker_architecture.md)
 
 ### Observability
 
 
-Observability (monitoring, alerts) allows us to monitor the health and performance of our systems, detect issues early, and gain insights into the behavior of our applications. We use a combination of tools and practices to achieve observability, including logging, metrics, and tracing. For more details, see [Observability](./observability.md).
+Observability (monitoring, alerts) allows us to monitor the health and performance of our systems, detect issues early, and gain insights into the behavior of our applications. We use a combination of tools and practices to achieve observability, including logging, metrics, and tracing. For more details, see [Observability](./explanation/observability.md).
 
 We also have a [status page](https://status.openfoodfacts.org/), driven by [openfoodfacts-upptime](https://github.com/openfoodfacts/openfoodfacts-upptime)
 and a [specific repository regarding monitoring](https://github.com/openfoodfacts/openfoodfacts-monitoring).
@@ -49,8 +49,8 @@ that created an alert.
 We use a lot ZFS capabilities to store data on disk, and synchronize them accross servers thanks to Sanoid.
 
 See:
-- [ZFS Overview](./zfs-overview.md): An introduction to ZFS.
-- [Sanoid](./sanoid.md): Information about using Sanoid for ZFS snapshots.
+- [ZFS Overview](./explanation/zfs-overview.md): An introduction to ZFS.
+- [Sanoid](./explanation/software/sanoid.md): Information about using Sanoid for ZFS snapshots.
 
 
 ## Our Servers
@@ -58,24 +58,24 @@ See:
 Our infrastructure is hosted on multiple bare metal servers.
 They are grouped in different data centers, usually forming a proxmox cluster.
 
-See [Infrastructure Overview](./overview.md)
+See [Infrastructure Overview](./explanation/infrastructure-overview.md)
 
 Some servers are graciously sponsored by [Fondation Free](https://www.fondation-free.fr/) (at [Scaleway](https://www.scaleway.com/)), [OVH](https://www.ovhcloud.com) and [Moji](https://moji.fr/)
 
 For more details about our servers and their configurations, see the following pages:
 
-- [Free Datacenter](./free-datacenter.md)
-- [OVH Servers](./ovh-servers.md)
-- [Moji Datacenter](./moji-datacenter.md)
-- [Hetzner Servers](./hetzner-servers.md)
-- [GCP Servers](./gcp-servers.md)
+- [Free Datacenter](./reference/free-datacenter.md)
+- [OVH Servers](./reference/ovh-servers.md)
+- [Moji Datacenter](./reference/moji-datacenter.md)
+- [Hetzner Servers](./reference/hetzner-servers.md)
+- [GCP Servers](./reference/gcp-servers.md)
 
 ## Production Architecture Overview
 
 Our production architecture consists of different services to run Open Food Facts and sibling projects.
 Those are deployed on different servers and different containers and virtual machines.
 
-For a detailed overview of our production architecture, see [Production Architecture](./prod-architecture.md).
+For a detailed overview of our production architecture, see [Production Architecture](./explanation/prod-architecture.md).
 
 Other tools supporting the community are deployed in containers, some times on the same servers.
 
@@ -97,46 +97,46 @@ The repository is organized into several directories, each serving a specific pu
 
 ### Important Services 
 
-- [Mail](./mail.md): Details about our mail setup.
-- [NGINX reverse proxy](./nginx-reverse-proxy.md): The reverse proxy for all services
+- [Mail](./explanation/mail.md): Details about our mail setup.
+- [NGINX reverse proxy](./explanation/nginx-reverse-proxy.md): The reverse proxy for all services
 
 
 ### Services Supporting the Main Open Food Facts Deployment
 
-- [Product Opener](./product-opener.md): Backend that powers the Open Food Facts website and mobile apps.
-- [Open Food Facts Query](./openfoodfacts-query.md): Service computing aggregations.
-- [Postgres](./postgres.md): Information about our PostgreSQL setup and management.
-- [MongoDB](./mongodb.md): Information about our MongoDB setup and management.
-- [Redis](./redis.md): Details about our Redis setup and management.
-- [Producers SFTP](./producers_sftp.md): To push product updates on producer platform.
-- [Folksonomy](./folksonomy.md): User editable labels and values.
-- [Recipe Estimator](./recipe-estimator.md): Prototype to estimate percentages of recipes
+- [Product Opener](./explanation/internal-services/product-opener.md): Backend that powers the Open Food Facts website and mobile apps.
+- [Open Food Facts Query](./explanation/internal-services/openfoodfacts-query.md): Service computing aggregations.
+- [Postgres](./explanation/software/postgres.md): Information about our PostgreSQL setup and management.
+- [MongoDB](./explanation/software/mongodb.md): Information about our MongoDB setup and management.
+- [Redis](./explanation/software/redis.md): Details about our Redis setup and management.
+- [Producers SFTP](./explanation/internal-services/producers_sftp.md): To push product updates on producer platform.
+- [Folksonomy](./explanation/services/folksonomy.md): User editable labels and values.
+- [Recipe Estimator](./explanation/projects/recipe-estimator.md): Prototype to estimate percentages of recipes
 
 ### Tools for the Community
 
-- [Discourse](./discourse.md): For forum.
-- [Matomo](./matomo.md): For web analytics.
-- [Zammad](./zammad.md): For support.
-- [Odoo](./odoo.md): The CRM.
+- [Discourse](./explanation/services/discourse.md): For forum.
+- [Matomo](./explanation/services/matomo.md): For web analytics.
+- [Zammad](./explanation/services/zammad.md): For support.
+- [Odoo](./explanation/services/odoo.md): The CRM.
 
 ## Additional Resources
 
 Here are some additional resources that may be of interest:
 
-- [Disks](./disks.md): Information about disk management and best practices.
+- [Disks](./explanation/disks.md): Information about disk management and best practices.
 - [How to mitigate crawlers on prod](./how-to/how-to-mitigate-crawlers-on-prod.md): Guide on mitigating crawlers on production.
 - [How to resync ZFS replication](./how-to/how-to-resync-zfs-replication.md): Guide on resyncing ZFS replication.
-- [Linux Server](./linux-server.md): General setup for Linux servers.
-- [Rclone](./rclone.md): Information about using rclone.
+- [Linux Server](./explanation/linux-server.md): General setup for Linux servers.
+- [Rclone](./explanation/software/rclone.md): Information about using rclone.
 
 ### Incident logs
 
-- [Logs off1](./logs-off1.md): Incident logs for off1 server.
-- [Logs off2](./logs-off2.md): Incident logs for off2 server.
-- [Logs off3](./logs-off3.md): Incident logs for off3 server.
-- [Logs ovh1](./logs-ovh1.md): Incident logs for ovh1 server.
-- [Logs ovh2](./logs-ovh2.md): Incident logs for ovh2 server.
-- [Logs ovh3](./logs-ovh3.md): Incident logs for ovh3 server.
+- [Logs off1](./reference/logs/logs-off1.md): Incident logs for off1 server.
+- [Logs off2](./reference/logs/logs-off2.md): Incident logs for off2 server.
+- [Logs off3](./reference/logs/logs-off3.md): Incident logs for off3 server.
+- [Logs ovh1](./reference/logs/logs-ovh1.md): Incident logs for ovh1 server.
+- [Logs ovh2](./reference/logs/logs-ovh2.md): Incident logs for ovh2 server.
+- [Logs ovh3](./reference/logs/logs-ovh3.md): Incident logs for ovh3 server.
 
 ## You are welcome to contribute
 

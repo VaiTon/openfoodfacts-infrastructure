@@ -14,7 +14,7 @@ We just have to create the containers and adjust file systems.
 
 ### Preparing container
 
-First create the 113 container named obf using ansible (see [proxmox - How to create a new container with ansible](../proxmox.md#how-to-create-a-new-container-with-ansible))
+First create the 113 container named obf using ansible (see [proxmox - How to create a new container with ansible](../explanation/proxmox.md#how-to-create-a-new-container-with-ansible))
 following what was done for 115 (opff).
 
 On scaleway-01:
@@ -212,7 +212,7 @@ Later:
 
 ### Preparing container
 
-First create the 114 container named opf using ansible (see [proxmox - How to create a new container with ansible](../proxmox.md#how-to-create-a-new-container-with-ansible))
+First create the 114 container named opf using ansible (see [proxmox - How to create a new container with ansible](../explanation/proxmox.md#how-to-create-a-new-container-with-ansible))
 following what was done for 115 (opff).
 
 On scaleway-01:

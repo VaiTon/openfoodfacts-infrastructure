@@ -158,10 +158,10 @@ And on ovh3 add them to `sanoid.conf` with `synced_data` template
 
 ## Creating Containers
 
-I created a CT for obf followings [How to create a new Container](../proxmox.md#how-to-create-a-new-container) it went all smooth.
+I created a CT for obf followings [How to create a new Container](../explanation/proxmox.md#how-to-create-a-new-container) it went all smooth.
 I choosed a 30Gb disk, 0B swap, 4 Cores and 6 Gb memory.
 
-I also [configure postfix](../mail.md#postfix-configuration) and tested it.
+I also [configure postfix]../explanation/mail.md#postfix-configuration) and tested it.
 
 **Important:** do not create any user until you changed id maping in lxc conf (see [Mounting volumes](#mounting-volumes)). And also think about creating off user before any other user to avoid having to change users uids, off must have uid 1000.
 
@@ -1766,4 +1766,3 @@ scripts/
   upload_photos_scanparty_rotterdam_ekoplaza.sh
 t/sitequality.t # renamed
 ```
-

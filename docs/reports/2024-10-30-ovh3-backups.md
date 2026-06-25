@@ -20,7 +20,7 @@ Note that we don't replicate between ovh1 and ovh2 because we have very few spac
 
 First because we won't use replication anymore, we have to create the ovh3operator on ovh1 and ovh2,
 and as we want to use replication snapshot, we have to use corresponding rights for ZFS,
-See [Sanoid / creating operator on PROD_SERVER](../sanoid.md#creating-operator-on-prod_server)
+See [Sanoid / creating operator on PROD_SERVER](../explanation/software/sanoid.md#creating-operator-on-prod_server)
 
 I also add to link zfs command in /usr/bin: `ln -s /usr/sbin/zfs /usr/bin`
 
@@ -48,7 +48,7 @@ I also removed sync of CT 107 to ovh1 (because we are nearly out of disk space) 
 
 We have two VMs that are really important to replicate (but using syncoid) from ovh1 to ovh2.
 
-So I [created an ovh2operator on ovh1](../sanoid.md#creating-operator-on-prod_server)
+So I [created an ovh2operator on ovh1](../explanation/software/sanoid.md#creating-operator-on-prod_server)
 
 I installed the syncoid systemd service and enabled it.
 Same for `sanoid_check`.

@@ -186,7 +186,7 @@ We have to create a container running stunnel in client mode.
 
 So first we create the CT, for this I edited the scaleway-02 host_vars proxmox.yml
 to add an entry to `proxmox_containers__containers`,
-add my container in inventory as well as its secret [as stated in Proxmox / How to create a new container with ansible](../proxmox.md#how-to-create-a-new-container-with-ansible).
+add my container in inventory as well as its secret [as stated in Proxmox / How to create a new container with ansible](../explanation/proxmox.md#how-to-create-a-new-container-with-ansible).
 and then run:
 ```bash
 ansible-playbook sites/proxmox-node.yml -l scaleway-02 --tags containers
