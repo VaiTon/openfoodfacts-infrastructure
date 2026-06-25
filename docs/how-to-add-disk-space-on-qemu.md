@@ -1,14 +1,10 @@
 # How to add disk space on a Qemu VM
 
-Sometimes you need to add space to a qemu VM disk.
-
-Remember to try first to clean unneaded file if possible !
-
-Also check the available space on the host.
+Sometimes you need to add space to a qemu VM disk. Remember to try first to clean unneaded file if possible! Also check the available space on the host.
 
 Use NFS mount of a directory (eg from ovh3) for backups.
 
-This doc is following https://pve.proxmox.com/wiki/Resize_disks
+This doc is following [https://pve.proxmox.com/wiki/Resize_disks](https://pve.proxmox.com/wiki/Resize_disks).
 
 ## Without swap
 
@@ -17,6 +13,7 @@ Example: adding 90GB on VM for docker prod (201) and disk scsi0
 On host: `sudo qm resize 201 scsi0 +90G`
 
 On VM:
+
 ```bash
 parted /dev/sda
 (parted) print
@@ -67,12 +64,12 @@ Number  Start   End     Size    Type      File system     Flags
  (parted) quit
 ```
 
-We have a problem because of swap. We must deactivate swap, remove swap partition and extended partition, augment our main partition, recreate extended and swap partition !
+We have a problem because of swap. We must deactivate swap, remove the swap partition and extended partition, augment our main partition, and recreate extended and swap partition!
 
 ```bash
 # deactivate swap
 $ sudo swapoff -a
-# remove partition in parted, augment main partition, recreate them
+# remove the partition in parted, augment the main partition, recreate them
 $ sudo parted /dev/sda
 (parted) rm 5
 (parted) rm 2
@@ -88,7 +85,7 @@ Start? 41,3GB
 End? 100%
 (parted) mkpart logical linux-swap 41,3GB 100%
 (parted) quit
-# resize partition
+# resize the partition
 $ sudo resize2fs /dev/sda1
 resize2fs 1.46.2 (28-Feb-2021)
 Filesystem at /dev/sda1 is mounted on /; on-line resizing required
@@ -96,14 +93,14 @@ old_desc_blocks = 4, new_desc_blocks = 5
 The filesystem on /dev/sda1 is now 10082751 (4k) blocks long.
 ```
 
-Now we have to re-enable swap, but UUID for partition have changed, so we have to edit `/etc/fstab` first.
+Now we have to re-enable swap, but the UUID for the partition has changed, so we have to edit `/etc/fstab` first.
 
 ```bash
 # prepare swap
 $ sudo mkswap /dev/sda5
 Setting up swapspace version 1, size = 1,5 GiB (1648357376 bytes)
 no label, UUID=431b8e8e-0691-471c-be8b-2c1039321142
-# edit /etc/fstab to point to new UUID
+# edit /etc/fstab to point to the new UUID
 $ sudo vim /etc/fstab
 ...
 # swap was on /dev/sda5 during installation
@@ -114,5 +111,4 @@ UUID=431b8e8e-0691-471c-be8b-2c1039321142 none            swap    sw            
 $ sudo systemctl daemon-reload
 # remount swap
 sudo swapon -a
-
 ```
