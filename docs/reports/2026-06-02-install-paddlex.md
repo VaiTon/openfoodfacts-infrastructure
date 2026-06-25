@@ -53,7 +53,17 @@ docker run -v paddlex-models:/root/.paddlex/official_models --shm-size=8g -it op
 ```
 
 
-## Deploying on docker-prod-2
+## Deploying on hezner-docker-staging (staging)
 
+The openfoodfacts-infrastructure repo was cloned locally at `/opt/openfoodfacts-infrastructure`.
 In `/home/off`, a `paddlex` symlink was created to `/opt/openfoodfacts-infrastructure/docker/paddlex`.
+
+```bash
+cd /home/off && ln -s /opt/openfoodfacts-infrastructure/docker/paddlex paddlex
+```
+
 Then, `docker compose up -d` was run to start the service.
+
+## Deploying on docker-prod-2 (prod)
+
+Same as for staging, except that the openfoodfacts-infrastructure repo already existed.
