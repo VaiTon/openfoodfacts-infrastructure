@@ -53,7 +53,7 @@ docker run -v paddlex-models:/root/.paddlex/official_models --shm-size=8g -it op
 ```
 
 
-## Deploying on hezner-docker-staging (staging)
+## Deploying on hetzner-docker-staging (hetzner, staging)
 
 The openfoodfacts-infrastructure repo was cloned locally at `/opt/openfoodfacts-infrastructure`.
 In `/home/off`, a `paddlex` symlink was created to `/opt/openfoodfacts-infrastructure/docker/paddlex`.
@@ -64,6 +64,15 @@ cd /home/off && ln -s /opt/openfoodfacts-infrastructure/docker/paddlex paddlex
 
 Then, `docker compose up -d` was run to start the service.
 
-## Deploying on docker-prod-2 (prod)
+A stunnel server was then configured on hetzner-proxy (CT 100) to connect to PaddleX (port 5610).
+As Open Prices staging is deployed on ovh-docker-staging, the stunnel client of OVH cluster  was configured
+accordingly. 
+
+## Deploying on docker-prod-2 (osm45, prod)
 
 Same as for staging, except that the openfoodfacts-infrastructure repo already existed.
+
+The stunnel server on osm45 (moji) was configured to accept connections on port 5610 (redirect to PaddleX
+deployed on docker-prod-2).
+As Open Prices production is deployed on scaleway-docker-prod-2, the stunnel client of Scaleway cluster was
+configured accordingly.
