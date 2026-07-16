@@ -1,0 +1,25 @@
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# systemd generates mount units based on this file, see systemd.mount(5).
+# Please run 'systemctl daemon-reload' after making changes here.
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda1 during installation
+UUID=701ffae3-8d77-445c-9534-34d30ed9f8e7 /               ext4    errors=remount-ro 0       1
+# /mnt/hdd was on /dev/sdc1 during installation
+UUID=deaee365-d175-4845-a875-3bb269cf242a /mnt/hdd        ext4    defaults        0       2
+# /mnt/nvme was on /dev/sdb1 during installation
+UUID=60fc037f-dc90-4b4e-a7df-ceabf7955a06 /mnt/nvme       ext4    defaults        0       2
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+# We store docker volumes on NVMe disk (sdb1)
+UUID=60fc037f-dc90-4b4e-a7df-ceabf7955a06   /var/lib/docker/volumes             ext4    errors=remount-ro 0       1
+# Access to podata backups
+# this virtiofs mapping points to /hdd-zfs/off-backups/scaleway-01-zfs-hdd/podata
+virtiofs-podata-hdd /mnt/podata-hdd virtiofs ro,noatime 0 0
+# this virtiofs mapping points to /hdd-zfs/off-backups/scaleway-01-zfs-nvme/podata
+virtiofs-podata-nvme /mnt/podata-nvme virtiofs ro,noatime 0 0
+
