@@ -23,7 +23,7 @@ geo $rate_limit_whitelist {
   default 0;
   # CIDR in the list below are not limited
   # images.openfoodfacts.org
-  217.182.132.133/24 1;
+  217.182.132.0/24 1;
   # internal trafic
   10.1.0.0/16 1;
   # moji
@@ -138,8 +138,9 @@ server {
 	}
 
 
-    listen [::]:443 ssl http2 ipv6only=on; # managed by Certbot
-    listen 443 ssl http2; # managed by Certbot
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    http2 on;
     ssl_certificate /etc/letsencrypt/live/images.openfoodfacts.org-0001/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/images.openfoodfacts.org-0001/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
