@@ -1,0 +1,16 @@
+---
+# If we regenerate iptables rules,
+# We need to restart the docker daemon (if it's running)
+- name: Check service status
+  listen:
+    - iptables - restart docker daemon
+  ansible.builtin.service_facts:
+
+- name: Effectively restart docker daemon when it is running
+  listen:
+    - iptables - restart docker daemon
+  ansible.builtin.service:
+    name: docker
+    state: restarted
+  become: true
+  when: ansible_facts.services['docker.service']['state'] == 'running'

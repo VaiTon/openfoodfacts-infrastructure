@@ -30,6 +30,7 @@
     mode: "0600"
   vars:
     iptables_rules_version: v4
+  register: iptables_rules_v4_generation
 
 - name: Setup the rules for iptables v6
   ansible.builtin.template:
@@ -40,6 +41,7 @@
     mode: "0600"
   vars:
     iptables_rules_version: v6
+  register: iptables_rules_v6_generation
 
 - name: Setup the rules for ipset
   ansible.builtin.template:
@@ -48,13 +50,18 @@
     owner: root
     group: root
     mode: "0600"
+  register: iptables_ipsets_generation
 
-- name: Reload ipset rules
+- name: Reload ipset rules  # noqa: no-handler
   ansible.builtin.shell: >-
     ipset restore -exist < /etc/iptables/ipsets
   changed_when: true
+  when: iptables_ipsets_generation.changed
+  notify:
+    # theoritically no docker daemon is required, but better safe than sorry…
+    - "iptables - restart docker daemon"
 
-- name: Reload iptables rules
+- name: Reload iptables rules  # noqa: no-handler
   community.general.iptables_state:
     ip_version: "ip{{ item }}"
     path: /etc/iptables/rules.{{ item }}
@@ -64,3 +71,7 @@
   poll: 0
   async: 5
   loop: ["v4", "v6"]
+  when: iptables_rules_v4_generation.changed or iptables_rules_v6_generation.changed
+  notify:
+    # we need to restart docker daemon to reload its own iptables rules
+    - "iptables - restart docker daemon"
